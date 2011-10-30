@@ -10,5 +10,6 @@ public class SBUMobileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 //        testing2
+//		  testing3
     }
 }
