@@ -1,19 +1,28 @@
+1) MobileApplication
+2) Base Activity with Options
+3) Main Activity
+4) Preferences Menu
+5) Content Pages
+
+-Design mox-like main activity
+	-News
+	-Events
+	-Alerts
+	-Campus Map
+		-Google Maps API
+		-Mark building locations
+		-Current location
+	-Contacts/Numbers/Email
+		-Store numbers/contact info from sbu in database
+		-Call/Email directly from app
+	-Building Hours
+		-List View
+		-Rotating to weekly block view
+
 -Develop method to scrap data from webpage
 	-Figure out how mox does it
 -Develop database to store events
 	-Use yamba as example?
--Split News and Events into different sections
-	-Different Address to scrap from?
--Design mox-like main activity
--Map
-	-Google Maps API
-	-Mark building locations
-	-Current location
--Address Book
-	-Store numbers/contact info from sbu in database
-	-Call/Email directly from app
-
 
 -Mellers Schedule?
--Lab/Library/Mellers/Cat Snack Open Times?
 -Remind Me Alarms?
