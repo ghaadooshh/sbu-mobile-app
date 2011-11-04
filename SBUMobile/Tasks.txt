@@ -3,24 +3,24 @@
 3) Main Activity				In Progress - Nick
 4) Preferences Menu
 5) Content Pages
-
--Design mox-like main activity
-	-News
-	-Events
-	-Alerts
-	-Campus Map
+	a) News
+		-Twitter
+		-Blogspot
+	b) Events
+		-Google Calendar
+	c) Alerts
+	d) Campus Map
 		-Google Maps API
 		-Mark building locations
 		-Current location
-	-Contacts/Numbers/Email
+	e) Contacts/Numbers/Email
 		-Store numbers/contact info from sbu in database
 		-Call/Email directly from app
-	-Building Hours
+	f) Building Hours
 		-List View
 		-Rotating to weekly block view
 
--Develop method to scrap data from webpage
-	-Figure out how mox does it
+
 -Develop database to store events
 	-Use yamba as example?
 
