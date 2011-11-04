@@ -14,7 +14,7 @@
 				android:layout_height="fill_parent" android:layout_width="fill_parent">
 				<ImageButton android:id="@+id/newsbutton" android:src="@drawable/news"
 					android:layout_gravity="center" android:layout_height="wrap_content" android:layout_weight="1" android:layout_width="0dp" android:layout_margin="5px"
-					android:onClick="onClick" />
+					 />
 				<ImageButton android:id="@+id/eventsbutton" android:src="@drawable/events"
 					android:layout_height="wrap_content" android:layout_gravity="center" android:layout_weight="1" android:layout_width="0dp" android:layout_margin="5px"/>
 				<ImageButton android:id="@+id/alertsbutton" android:src="@drawable/alerts"
