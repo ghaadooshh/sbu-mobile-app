@@ -1,5 +1,6 @@
 package edu.sbu.sbumobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -7,8 +8,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class SBUMobileActivity extends BaseActivity {
-	//implements OnClickListener {
+public class SBUMobileActivity extends BaseActivity implements OnClickListener {
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -16,12 +17,29 @@ public class SBUMobileActivity extends BaseActivity {
 		setContentView(R.layout.main);		
 	
 		final ImageView newsButton = (ImageView) findViewById(R.id.newsbutton);
-		newsButton.setOnClickListener(new View.OnClickListener() {
-	        public void onClick(View v) {
-	            // Perform action on click
-	        	System.out.println("Clicked");
-//	    		Toast.makeText(context, "News clicked", 10000);
-	        }
-	    });
+		newsButton.setOnClickListener(this);
+		
+		final ImageView eventsButton = (ImageView) findViewById(R.id.eventsbutton);
+		eventsButton.setOnClickListener(this);
+		
+		final ImageView alertsButton = (ImageView) findViewById(R.id.alertsbutton);
+		alertsButton.setOnClickListener(this);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch(v.getId()){
+			case(R.id.newsbutton):
+				Toast.makeText(getApplicationContext(), "News", Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(this, NewsActivity.class);
+				startActivity(intent);
+			break;
+			case(R.id.eventsbutton):
+				Toast.makeText(getApplicationContext(), "Events", Toast.LENGTH_SHORT).show();
+			break;
+			case(R.id.alertsbutton):
+				Toast.makeText(getApplicationContext(), "Alerts", Toast.LENGTH_SHORT).show();
+			break;
+		}
 	}
 }
