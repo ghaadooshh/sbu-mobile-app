@@ -16,6 +16,8 @@
         </activity>
 		<activity android:name=".PrefsActivity" android:label="@string/titlePrefs" />
 		<activity android:name="NewsActivity"  android:label="@string/titleNews" />
+		<activity android:name="EventsActivity"  android:label="@string/titleEvents" />
+		<activity android:name="AlertsActivity"  android:label="@string/titleAlerts" />
 		
     </application>
 </manifest>

@@ -3,4 +3,6 @@
     <string name="app_name">SBU Mobile Access</string>
     <string name="titlePrefs">Preferences</string>
     <string name="titleNews">Recent News</string>
+    <string name="titleEvents">Upcoming Events</string>
+    <string name="titleAlerts">Important Alerts</string>
 </resources>
