@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, SBUMobileActivity!</string>
-    <string name="app_name">SBUMobile</string>
-    <string name="titlePrefs">Prefs</string>
+    <string name="app_name">SBU Mobile Access</string>
+    <string name="titlePrefs">Preferences</string>
+    <string name="titleNews">Recent News</string>
 </resources>
