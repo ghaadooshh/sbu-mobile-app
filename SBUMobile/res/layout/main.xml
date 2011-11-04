@@ -2,7 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:layout_height="fill_parent" android:layout_margin="5dip">
 	<LinearLayout android:orientation="vertical"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
@@ -12,45 +12,14 @@
 			<LinearLayout android:id="@+id/linearLayout1"
 				android:orientation="horizontal" android:layout_weight="1"
 				android:layout_height="fill_parent" android:layout_width="fill_parent">
-				<ImageView android:id="@+id/imagebutton" android:src="@drawable/news"
-					android:layout_height="wrap_content" android:layout_width="wrap_content"
-					android:layout_gravity="center" android:layout_margin="10px" />
-				<ImageView android:id="@+id/imagebutton" android:src="@drawable/events"
-					android:layout_height="wrap_content" android:layout_width="wrap_content"
-					android:layout_gravity="center" android:layout_margin="10px" />
-				<ImageView android:id="@+id/imagebutton" android:src="@drawable/alerts"
-					android:layout_height="wrap_content" android:layout_width="wrap_content"
-					android:layout_gravity="center" android:layout_margin="10px" />
+				<ImageButton android:id="@+id/newsbutton" android:src="@drawable/news"
+					android:layout_gravity="center" android:layout_height="wrap_content" android:layout_weight="1" android:layout_width="0dp" android:layout_margin="5px"
+					android:onClick="onClick" />
+				<ImageButton android:id="@+id/eventsbutton" android:src="@drawable/events"
+					android:layout_height="wrap_content" android:layout_gravity="center" android:layout_weight="1" android:layout_width="0dp" android:layout_margin="5px"/>
+				<ImageButton android:id="@+id/alertsbutton" android:src="@drawable/alerts"
+					android:layout_height="wrap_content" android:layout_gravity="center" android:layout_weight="1" android:layout_width="0dp" android:layout_margin="5px"/>
 			</LinearLayout>
-
-<!-- 			<LinearLayout android:id="@+id/linearLayout2"
-				android:orientation="horizontal" android:layout_weight="1"
-				android:layout_height="fill_parent" android:layout_width="fill_parent">
-				<ImageView android:id="@+id/imagebutton" android:src="@drawable/icon"
-					android:layout_height="wrap_content" android:layout_width="wrap_content"
-					android:layout_gravity="center" android:layout_margin="10px" />
-				<ImageView android:id="@+id/imagebutton" android:src="@drawable/icon"
-					android:layout_height="wrap_content" android:layout_width="wrap_content"
-					android:layout_gravity="center" android:layout_margin="10px" />
-				<ImageView android:id="@+id/imagebutton" android:src="@drawable/icon"
-					android:layout_height="wrap_content" android:layout_width="wrap_content"
-					android:layout_gravity="center" android:layout_margin="10px" />
-			</LinearLayout>
-			<LinearLayout android:id="@+id/linearLayout3"
-				android:orientation="horizontal" android:layout_weight="1"
-				android:layout_height="fill_parent" android:layout_width="fill_parent">
-				<ImageView android:id="@+id/imagebutton" android:src="@drawable/icon"
-					android:layout_height="wrap_content" android:layout_width="wrap_content"
-					android:layout_gravity="center" android:layout_margin="10px" />
-				<ImageView android:id="@+id/imagebutton" android:src="@drawable/icon"
-					android:layout_height="wrap_content" android:layout_width="wrap_content"
-					android:layout_gravity="center" android:layout_margin="10px" />
-				<ImageView android:id="@+id/imagebutton" android:src="@drawable/icon"
-					android:layout_height="wrap_content" android:layout_width="wrap_content"
-					android:layout_gravity="center" android:layout_margin="10px" />
-			</LinearLayout>
-			-->
-			
 		</LinearLayout>
 	</LinearLayout>
 </RelativeLayout>
