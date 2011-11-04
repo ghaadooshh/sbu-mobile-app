@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World, SBUMobileActivity!</string>
     <string name="app_name">SBUMobile</string>
+    <string name="titlePrefs">Prefs</string>
 </resources>
