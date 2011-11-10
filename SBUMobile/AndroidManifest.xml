@@ -21,9 +21,6 @@
 		<activity android:name="EventsActivity"  android:label="@string/titleEvents" />
 		<activity android:name="AlertsActivity"  android:label="@string/titleAlerts" />
 		
-		<!-- Service Registrations -->
-		<service android:name=".UpdaterService" />
-		
 		<!-- Permissions -->
 		<uses-permission android:name="android.permission.INTERNET" />
 		
