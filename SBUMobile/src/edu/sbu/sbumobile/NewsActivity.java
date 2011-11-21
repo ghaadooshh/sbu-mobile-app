@@ -40,7 +40,6 @@ public class NewsActivity extends Activity {
         setContentView(R.layout.news);
         
         ArrayList<Tweet> tweets = getTweets("from:sbuniv", 1);
-        
         ListView listView = (ListView) findViewById(R.id.ListViewId);
         listView.setAdapter(new UserItemAdapter(this, R.layout.listitem, tweets));
     }
@@ -76,7 +75,8 @@ public class NewsActivity extends Activity {
 				}
 				
 				if(image != null) {
-					image.setImageBitmap(getBitmap(tweet.image_url));
+					//image.setImageBitmap(getBitmap(tweet.image_url));
+					image.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.seal_tweet_icon));
 				}
 			}
 			return v;

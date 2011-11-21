@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">SBU Mobile Access</string>
     <string name="titlePrefs">Preferences</string>
     <string name="titleNews">Recent News</string>
-    <string name="subtitleNews">Headlines</string>
-    <string name="titleEvents">Upcoming Events</string>
-    <string name="subtitleEvents">Calendar</string>
     <string name="titleAlerts">Important Alerts</string>
+    <string name="titleEvents">Upcoming Events</string>
+    <string name="titleSports">Bearcat Sports</string>
+    <string name="subtitleEvents">Calendar</string>
+    <string name="subtitleNews">Headlines</string>
     <string name="subtitleAlerts">Warnings</string>
+    <string name="subtitleSports">Athletics</string>
+    <string name="loading">Loading...</string>
+
 </resources>

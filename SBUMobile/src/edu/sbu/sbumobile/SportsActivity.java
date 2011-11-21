@@ -32,15 +32,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class AlertsActivity extends Activity {
+public class SportsActivity extends Activity {
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.alerts);
+        setContentView(R.layout.sports);
         
-        ArrayList<Tweet> tweets = getTweets("from:sbualert", 1);
-        
+        ArrayList<Tweet> tweets = getTweets("from:sbubearcats", 1);
         ListView listView = (ListView) findViewById(R.id.ListViewId);
         listView.setAdapter(new UserItemAdapter(this, R.layout.listitem, tweets));
     }
@@ -77,7 +76,7 @@ public class AlertsActivity extends Activity {
 				
 				if(image != null) {
 					//image.setImageBitmap(getBitmap(tweet.image_url));
-					image.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.seal_tweet_icon));
+					image.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.bearcat_tweet_icon));
 				}
 			}
 			return v;
