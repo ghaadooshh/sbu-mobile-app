@@ -1,26 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="edu.sbu.sbumobile"
-      android:versionCode="1"
-      android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="8" />
-	<uses-permission android:name="android.permission.INTERNET" />
+    package="edu.sbu.sbumobile"
+    android:versionCode="1"
+    android:versionName="1.0" >
 
-    <application android:icon="@drawable/icon" android:label="@string/app_name"
-    				android:name="edu.sbu.sbumobile.MobileApplication">
-    	
-    	<!-- Activity Registrations -->
-        <activity android:name=".SBUMobileActivity"
-                  android:label="@string/app_name">
-            <intent-filter>
+    <uses-sdk android:minSdkVersion="8" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:name="edu.sbu.sbumobile.MobileApplication" >
+
+        <!-- Activity Registrations -->
+        <activity
+            android:label="@string/app_name"
+            android:name=".SBUMobileActivity" >
+            <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-		<activity android:name=".PrefsActivity" android:label="@string/titlePrefs" />
-		<activity android:name="NewsActivity"  android:label="@string/titleNews" />
-		<activity android:name="EventsActivity"  android:label="@string/titleEvents" />
-		<activity android:name="AlertsActivity"  android:label="@string/titleAlerts" />
-		
+        <activity
+            android:label="@string/titlePrefs"
+            android:name=".PrefsActivity" />
+        <activity
+            android:label="@string/titleNews"
+            android:name="NewsActivity" />
+        <activity
+            android:label="@string/titleEvents"
+            android:name="EventsActivity" />
+        <activity
+            android:label="@string/titleAlerts"
+            android:name="AlertsActivity" />
+        <activity
+            android:label="@string/titleSports"
+            android:name="SportsActivity" />
     </application>
+
 </manifest>

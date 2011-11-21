@@ -1,24 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:layout_margin="5dip" android:background="@drawable/purple_background">
-	<LinearLayout android:orientation="vertical"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
-		android:gravity="center">
-		<LinearLayout android:orientation="vertical"
-			android:layout_height="wrap_content" android:layout_width="wrap_content">
-			<LinearLayout android:id="@+id/linearLayout1"
-				android:orientation="horizontal" android:layout_weight="1"
-				android:layout_height="fill_parent" android:layout_width="fill_parent">
-				<ImageButton android:id="@+id/newsbutton" android:src="@drawable/news"
-					android:layout_gravity="center" android:layout_height="wrap_content" android:layout_weight="1" android:layout_width="0dp" android:layout_margin="5px"/>
-				<ImageButton android:id="@+id/eventsbutton" android:src="@drawable/events"
-					android:layout_height="wrap_content" android:layout_gravity="center" android:layout_weight="1" android:layout_width="0dp" android:layout_margin="5px"/>
-				<ImageButton android:id="@+id/alertsbutton" android:src="@drawable/alerts"
-					android:layout_height="wrap_content" android:layout_gravity="center" android:layout_weight="1" android:layout_width="0dp" android:layout_margin="5px"/>
-			</LinearLayout>
-		</LinearLayout>
-	</LinearLayout>
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="5dip"
+    android:background="@drawable/purple_background"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/newsbutton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="3px"
+                    android:layout_weight="1"
+                    android:src="@drawable/news" />
+
+                <ImageButton
+                    android:id="@+id/eventsbutton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="0px"
+                    android:layout_weight="1"
+                    android:src="@drawable/events" />
+
+                <ImageButton
+                    android:id="@+id/alertsbutton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="3px"
+                    android:layout_weight="1"
+                    android:src="@drawable/alerts" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/blankbutton1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="3px"
+                    android:layout_weight="1"
+                    android:visibility="invisible" />
+
+                <ImageButton
+                    android:id="@+id/sportsbutton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="0px"
+                    android:layout_weight="1"
+                    android:src="@drawable/sports" />
+
+                <ImageButton
+                    android:id="@+id/blankbutton2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="3px"
+                    android:layout_weight="1" 
+                    android:visibility="invisible" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
 </RelativeLayout>
