@@ -32,9 +32,6 @@
             android:label="@string/titleEvents"
             android:name="EventsActivity" />
         <activity
-            android:label="@string/titleAlerts"
-            android:name="AlertsActivity" />
-        <activity
             android:label="@string/titleSports"
             android:name="SportsActivity" />
     </application>

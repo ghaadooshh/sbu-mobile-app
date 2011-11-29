@@ -21,9 +21,6 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 		final ImageView eventsButton = (ImageView) findViewById(R.id.eventsbutton);
 		eventsButton.setOnClickListener(this);
 		
-		final ImageView alertsButton = (ImageView) findViewById(R.id.alertsbutton);
-		alertsButton.setOnClickListener(this);
-		
 		final ImageView sportsButton = (ImageView) findViewById(R.id.sportsbutton);
 		sportsButton.setOnClickListener(this);
 	}
@@ -38,11 +35,6 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 			case(R.id.eventsbutton):
 				Toast.makeText(getApplicationContext(), R.string.loading, Toast.LENGTH_SHORT).show();
 				startActivity(new Intent(this, EventsActivity.class));
-			break;
-			case(R.id.alertsbutton):
-				Toast.makeText(getApplicationContext(), R.string.loading, Toast.LENGTH_SHORT).show();
-//				startActivity(new Intent(this, AlertsActivity.class));
-				startActivity(new Intent(this, AlertsActivity.class));
 			break;
 			case(R.id.sportsbutton):
 				Toast.makeText(getApplicationContext(), R.string.loading, Toast.LENGTH_SHORT).show();
