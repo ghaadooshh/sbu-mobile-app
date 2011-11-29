@@ -1,28 +1,16 @@
-1) MobileApplication			In Progress - Carson
-2) Base Activity with Options	In Progress - Carson
-3) Main Activity				In Progress - Nick
+1) MobileApplication			
+2) Base Activity with Options	
+3) Main Activity				
 4) Preferences Menu
 5) Content Pages
-	a) News
-		-Twitter
-		-Blogspot
-	b) Events
-		-Google Calendar
-	c) Alerts
-	d) Campus Map
+	- Campus Map
 		-Google Maps API
 		-Mark building locations
 		-Current location
-	e) Contacts/Numbers/Email
-		-Store numbers/contact info from sbu in database
-		-Call/Email directly from app
-	f) Building Hours
+	- Building Hours
 		-List View
 		-Rotating to weekly block view
 
-
--Develop database to store events
-	-Use yamba as example?
 
 -Mellers Schedule?
 -Remind Me Alarms?
