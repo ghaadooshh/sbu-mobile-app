@@ -41,6 +41,7 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 			break;
 			case(R.id.alertsbutton):
 				Toast.makeText(getApplicationContext(), R.string.loading, Toast.LENGTH_SHORT).show();
+//				startActivity(new Intent(this, AlertsActivity.class));
 				startActivity(new Intent(this, AlertsActivity.class));
 			break;
 			case(R.id.sportsbutton):
