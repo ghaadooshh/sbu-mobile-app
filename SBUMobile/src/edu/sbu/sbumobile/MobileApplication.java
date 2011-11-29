@@ -1,5 +1,8 @@
 package edu.sbu.sbumobile;
 
+import java.util.ArrayList;
+
+import edu.sbu.sbumobile.EventsActivity.CalendarEntry;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -10,6 +13,7 @@ public class MobileApplication extends Application implements
 		OnSharedPreferenceChangeListener {
 	private static final String TAG = MobileApplication.class.getSimpleName();
 	private SharedPreferences prefs;
+	public ArrayList<CalendarEntry> calendar = new ArrayList<CalendarEntry>();
 
 	@Override
 	public void onCreate() {
