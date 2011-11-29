@@ -44,10 +44,12 @@ public class EventsActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.events);
 
-		ArrayList<CalendarEntry> calendar = getSBUCalendars();
+		getSBUCalendars();
+//		ArrayList<CalendarEntry> calendar = app.calendar;
+//		app.calendar = calendar;
 		
         listView = (ListView) findViewById(R.id.EventsListView);
-        adapter = new UserItemAdapter(this, R.layout.calitem, calendar);
+        adapter = new UserItemAdapter(this, R.layout.calitem, app.calendar);
         
 		listView.setAdapter(adapter.adapter);
 		
@@ -145,32 +147,31 @@ public class EventsActivity extends BaseActivity {
 		}//constructor
 	}//class
 
-	private ArrayList<CalendarEntry> getSBUCalendars() {
-		ArrayList<CalendarEntry> calendar = new ArrayList<CalendarEntry>();
-		System.out.println("Loading Calendar 1/11");
-		calendar = getCalendar(calendar, "bju1h24pdb4qkh3flljbv2c374"); //SBU
-		System.out.println("Loading Calendar 2/11");
-		calendar = getCalendar(calendar, "6lio3us2rcug7v4hou9u4nhqes"); //SBU-SGA
-		System.out.println("Loading Calendar 3/11");
-		calendar = getCalendar(calendar, "c4ofc4j0efrl0btftglmu4of9s"); //SBU-UAC
-		System.out.println("Loading Calendar 4/11");
-		calendar = getCalendar(calendar, "th7almtgpen847q8af96fc6dd0"); //SBUacademics
-		System.out.println("Loading Calendar 5/11");
-		calendar = getCalendar(calendar, "5pg4h86s5mka7k1ooqdtmg2gl8"); //SBUathletics
-		System.out.println("Loading Calendar 6/11");
-		calendar = getCalendar(calendar, "o9cvggpgdmlnqv210arv0s54so"); //SBUChapel
-		System.out.println("Loading Calendar 7/11");
-		calendar = getCalendar(calendar, "27ac4a7hv3qfcn8s4ac0tppt8s"); //SBUclubs/organizations
-		System.out.println("Loading Calendar 8/11");
-		calendar = getCalendar(calendar, "otm002ck939ft163n57nfdbbno"); //SBUintramuralSports
-		System.out.println("Loading Calendar 9/11");
-		calendar = getCalendar(calendar, "0srvkmajlvoo5d21lgoo9htdc8"); //SBUperformingArts
-		System.out.println("Loading Calendar 10/11");
-		calendar = getCalendar(calendar, "90pdj27la6p3ismpk2h6871ok0"); //SBUresidenceLife
-		System.out.println("Loading Calendar 11/11");
-		calendar = getCalendar(calendar, "kjn15va1uanr5huju3ds6fua8c"); //Summer Camps
-		
-		return calendar;
+	private void getSBUCalendars() {
+		if(app.calendar.isEmpty()) {
+			System.out.println("Loading Calendar 1/11");
+			app.calendar = getCalendar(app.calendar, "bju1h24pdb4qkh3flljbv2c374"); //SBU
+			System.out.println("Loading Calendar 2/11");
+			app.calendar = getCalendar(app.calendar, "6lio3us2rcug7v4hou9u4nhqes"); //SBU-SGA
+			System.out.println("Loading Calendar 3/11");
+			app.calendar = getCalendar(app.calendar, "c4ofc4j0efrl0btftglmu4of9s"); //SBU-UAC
+			System.out.println("Loading Calendar 4/11");
+			app.calendar = getCalendar(app.calendar, "th7almtgpen847q8af96fc6dd0"); //SBUacademics
+			System.out.println("Loading Calendar 5/11");
+			app.calendar = getCalendar(app.calendar, "5pg4h86s5mka7k1ooqdtmg2gl8"); //SBUathletics
+			System.out.println("Loading Calendar 6/11");
+			app.calendar = getCalendar(app.calendar, "o9cvggpgdmlnqv210arv0s54so"); //SBUChapel
+			System.out.println("Loading Calendar 7/11");
+			app.calendar = getCalendar(app.calendar, "27ac4a7hv3qfcn8s4ac0tppt8s"); //SBUclubs/organizations
+			System.out.println("Loading Calendar 8/11");
+			app.calendar = getCalendar(app.calendar, "otm002ck939ft163n57nfdbbno"); //SBUintramuralSports
+			System.out.println("Loading Calendar 9/11");
+			app.calendar = getCalendar(app.calendar, "0srvkmajlvoo5d21lgoo9htdc8"); //SBUperformingArts
+			System.out.println("Loading Calendar 10/11");
+			app.calendar = getCalendar(app.calendar, "90pdj27la6p3ismpk2h6871ok0"); //SBUresidenceLife
+			System.out.println("Loading Calendar 11/11");
+			app.calendar = getCalendar(app.calendar, "kjn15va1uanr5huju3ds6fua8c"); //Summer Camps
+		}
 	}
 	
 	private ArrayList<CalendarEntry> getCalendar (ArrayList<CalendarEntry> calendar, String calId) {
