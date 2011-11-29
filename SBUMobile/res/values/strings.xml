@@ -12,5 +12,6 @@
     <string name="subtitleAlerts">Warnings</string>
     <string name="subtitleSports">Athletics</string>
     <string name="loading">Loading...</string>
+    <string name="menuRefresh">Refresh</string>
 
 </resources>
