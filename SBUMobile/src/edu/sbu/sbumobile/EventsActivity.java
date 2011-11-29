@@ -1,7 +1,11 @@
 package edu.sbu.sbumobile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -65,7 +69,27 @@ public class EventsActivity extends BaseActivity {
 		});
 	}
 	
-
+	//Called once - first menu click
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.eventsmenu, menu);
+		return true;
+	}
+	
+	//Called every menu click
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.itemPrefs:
+			startActivity(new Intent(this, PrefsActivity.class)
+				.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+			break;
+		case R.id.itemRefresh:
+			break;
+		}
+		return true;
+	}
+	
 	public class UserItemAdapter extends ArrayAdapter<CalendarEntry> {
 		private ArrayList<CalendarEntry> calendar;
 		public SeparatedListAdapter adapter;
