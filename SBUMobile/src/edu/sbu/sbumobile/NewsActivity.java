@@ -17,6 +17,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,9 +70,10 @@ public class NewsActivity extends Activity {
 				}
 				
 				if(image != null) {
-					//image.setImageBitmap(getBitmap(tweet.image_url));
 					image.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.seal_tweet_icon));
 				}
+				
+				message.setMovementMethod(LinkMovementMethod.getInstance());
 			}
 			return v;
 		}
