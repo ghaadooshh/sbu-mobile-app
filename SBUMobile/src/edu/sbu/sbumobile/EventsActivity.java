@@ -44,7 +44,8 @@ public class EventsActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.events);
 
-		if(app.calendar.isEmpty()) {
+		if((!app.calendarLoading) && (app.calendar.isEmpty())) {
+			app.calendarLoading = true;
 			Toast.makeText(getApplicationContext(), R.string.loading, Toast.LENGTH_LONG).show();
 			DownloadWebPageTask task = new DownloadWebPageTask();
 			task.execute(new String[] { "bju1h24pdb4qkh3flljbv2c374",
@@ -58,9 +59,8 @@ public class EventsActivity extends BaseActivity {
 										"0srvkmajlvoo5d21lgoo9htdc8",
 										"90pdj27la6p3ismpk2h6871ok0",
 										"kjn15va1uanr5huju3ds6fua8c" });
-		} else {
+		} else 
 			setView();
-		}
 	
 	}
 	
@@ -191,8 +191,9 @@ public class EventsActivity extends BaseActivity {
 		@Override
 		protected void onPostExecute(String result) {
 			getCalendar(result);
-			
 			setView();
+			app.calendarLoading = false;
+			System.out.println("Done Loading");
 		}
 	}
 	
