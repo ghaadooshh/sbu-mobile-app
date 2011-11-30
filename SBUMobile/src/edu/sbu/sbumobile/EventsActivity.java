@@ -80,10 +80,11 @@ public class EventsActivity extends BaseActivity {
 					item.get("calTitle");
 					item.get("calDate");
 					item.get("calAuthor");
-					String time = item.get("calTime")+"\n";
+					String time = item.get("calTime");
 					if (item.get("calTime") == null)
-						time = "All Day\n";
-					Toast.makeText(getApplicationContext(), time, Toast.LENGTH_SHORT).show();
+						time = "All Day";
+					String details = item.get("calTitle")+ "\n\n" + time + "\n" + item.get("calAuthor");
+					Toast.makeText(getApplicationContext(), details, Toast.LENGTH_SHORT).show();
 				}
 		});
 	}
