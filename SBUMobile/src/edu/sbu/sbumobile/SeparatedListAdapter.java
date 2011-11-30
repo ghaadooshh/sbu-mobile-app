@@ -34,11 +34,9 @@ public class SeparatedListAdapter extends BaseAdapter {
 
 			// check if position inside this section
 			if(position == 0) {
-				System.out.println("s "+section);
 				return section;
 			}
 			if(position < size) {
-				System.out.println("a "+adapter.getItem(position - 1));
 				return adapter.getItem(position - 1);
 			}
 

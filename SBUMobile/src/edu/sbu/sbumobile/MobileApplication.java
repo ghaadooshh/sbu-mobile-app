@@ -42,4 +42,8 @@ public class MobileApplication extends Application implements
 		super.onTerminate();
 		Log.i(TAG, "Application Terminated");
 	}
+	
+	
+	
+	
 }

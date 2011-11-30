@@ -33,7 +33,7 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 				startActivity(new Intent(this, NewsActivity.class));
 			break;
 			case(R.id.eventsbutton):
-				Toast.makeText(getApplicationContext(), R.string.loading, Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getApplicationContext(), R.string.loading, Toast.LENGTH_SHORT).show();
 				startActivity(new Intent(this, EventsActivity.class));
 			break;
 			case(R.id.sportsbutton):
