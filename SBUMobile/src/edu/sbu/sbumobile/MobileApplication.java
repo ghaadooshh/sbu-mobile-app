@@ -14,7 +14,8 @@ public class MobileApplication extends Application implements
 	private static final String TAG = MobileApplication.class.getSimpleName();
 	private SharedPreferences prefs;
 	public ArrayList<CalendarEntry> calendar = new ArrayList<CalendarEntry>();
-
+	public boolean calendarLoading = false;
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
