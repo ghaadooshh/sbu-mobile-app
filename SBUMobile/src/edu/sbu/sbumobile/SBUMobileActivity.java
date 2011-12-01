@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class SBUMobileActivity extends BaseActivity implements OnClickListener {
-
+	AlertDialog ad;
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,16 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 
 		final ImageView sportsButton = (ImageView) findViewById(R.id.sportsbutton);
 		sportsButton.setOnClickListener(this);
+		
+		ad = new AlertDialog.Builder(this).create();
+		ad.setCancelable(false);
+		ad.setMessage("No internet connection is available.");
+		ad.setButton("OK", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
 	}
 
 	public boolean isOnline() {
@@ -38,59 +48,25 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case (R.id.newsbutton):
-			if (isOnline()) {
-				Toast.makeText(getApplicationContext(), R.string.loading,
-						Toast.LENGTH_SHORT).show();
-				startActivity(new Intent(this, NewsActivity.class));
-			} else {
-				AlertDialog ad = new AlertDialog.Builder(this).create();
-				ad.setCancelable(false);
-				ad.setMessage("No internet connection is available.");
-				ad.setButton("OK", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
-				ad.show();
+		if (isOnline()) {
+			switch (v.getId()) {
+			case (R.id.newsbutton):
+					Toast.makeText(getApplicationContext(), R.string.loading,
+							Toast.LENGTH_SHORT).show();
+					startActivity(new Intent(this, NewsActivity.class));
+				break;
+			case (R.id.eventsbutton):
+					startActivity(new Intent(this, EventsActivity.class));
+				break;
+			case (R.id.sportsbutton):
+					Toast.makeText(getApplicationContext(), R.string.loading,
+							Toast.LENGTH_SHORT).show();
+					startActivity(new Intent(this, SportsActivity.class));
+				break;
 			}
-			break;
-		case (R.id.eventsbutton):
-			if (isOnline()) {
-				startActivity(new Intent(this, EventsActivity.class));
-			} else {
-				AlertDialog ad = new AlertDialog.Builder(this).create();
-				ad.setCancelable(false);
-				ad.setMessage("No internet connection is available.");
-				ad.setButton("OK", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
-				ad.show();
-			}
-			break;
-		case (R.id.sportsbutton):
-			if (isOnline()) {
-				Toast.makeText(getApplicationContext(), R.string.loading,
-						Toast.LENGTH_SHORT).show();
-				startActivity(new Intent(this, SportsActivity.class));
-			} else {
-				AlertDialog ad = new AlertDialog.Builder(this).create();
-				ad.setCancelable(false);
-				ad.setMessage("No internet connection is available.");
-				ad.setButton("OK", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
-				ad.show();
-			}
-			break;
+		} else {
+			ad.show();
 		}
+		
 	}
 }
