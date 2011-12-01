@@ -14,13 +14,16 @@ import org.json.simple.parser.JSONParser;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -72,6 +75,21 @@ public class SportsActivity extends Activity {
 					//image.setImageBitmap(getBitmap(tweet.image_url));
 					image.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.bearcat_tweet_icon));
 				}
+				message.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						try {
+							TextView subMessage = (TextView) v;
+							String content = subMessage.getText().toString();
+							String URL = content.substring(
+									content.indexOf("http"), content.length());
+							Intent i = new Intent(Intent.ACTION_VIEW);
+							i.setData(Uri.parse(URL));
+							startActivity(i);
+						} catch (Exception e) {
+						}
+					}
+				});
 			}
 			return v;
 		}
