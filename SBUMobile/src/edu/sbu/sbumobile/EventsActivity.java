@@ -6,12 +6,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import edu.sbu.sbumobile.MobileApplication.CalendarEntry;
-
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,29 +21,53 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
+import edu.sbu.sbumobile.MobileApplication.CalendarEntry;
 
 
 public class EventsActivity extends BaseActivity {
 	private ListView listView;
 	private UserItemAdapter adapter;
-	
+	IncomingReceiver receiver;
+	IntentFilter filter;
+	static final String SEND_CALENDAR = "edu.sbu.sbumobile.SEND_CALENDER";
+	  
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.events);
 
+	    receiver = new IncomingReceiver();
+	    filter = new IntentFilter( SEND_CALENDAR );
+	    
 		if((!app.calendarLoading) && (!app.calendar.isEmpty())) {
-//			Toast.makeText(getApplicationContext(), R.string.loading, Toast.LENGTH_LONG).show();
-
 			setView();
-
 		}
-	
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		// Register the receiver
+		super.registerReceiver(receiver, filter);
 	}
 	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		// UNregister the receiver
+		unregisterReceiver(receiver); 
+	}
+	
+	public class IncomingReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			System.out.println("IncomingReceiver - onReceived");
+			setView();
+		}
+	}
+
 	public void setView() {
+		System.out.println("setView");
         listView = (ListView) findViewById(R.id.EventsListView);
         adapter = new UserItemAdapter(getApplicationContext(), R.layout.calitem, app.calendar);
 
@@ -63,7 +87,7 @@ public class EventsActivity extends BaseActivity {
 					if (item.get("calTime") == null)
 						time = "All Day";
 					String details = item.get("calTitle")+ "\n\n" + time + "\n" + item.get("calAuthor");
-					//Toast.makeText(getApplicationContext(), details, Toast.LENGTH_SHORT).show();
+//					Toast.makeText(getApplicationContext(), details, Toast.LENGTH_SHORT).show();
 					AlertDialog ad = new AlertDialog.Builder(EventsActivity.this).create();
 					ad.setCancelable(false);
 					ad.setMessage(details);
@@ -77,26 +101,7 @@ public class EventsActivity extends BaseActivity {
 				}
 		});
 	}
-	//Called once - first menu click
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.eventsmenu, menu);
-		return true;
-	}
-	
-	//Called every menu click
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.itemPrefs:
-			startActivity(new Intent(this, PrefsActivity.class)
-				.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-			break;
-		case R.id.itemRefresh:
-			break;
-		}
-		return true;
-	}
+
 	
 	public class UserItemAdapter extends ArrayAdapter<CalendarEntry> {
 		private ArrayList<CalendarEntry> calendar;
@@ -154,6 +159,27 @@ public class EventsActivity extends BaseActivity {
 
 		}//constructor
 	}//class
+
+	// Called only once first time menu is clicked on
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) { // <4>
+		getMenuInflater().inflate(R.menu.eventsmenu, menu);
+		return true;
+	}
+
+	// Called every time user clicks on a menu item
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) { // <5>
+		switch (item.getItemId()) {
+		case R.id.itemPrefs:
+			startActivity(new Intent(this, PrefsActivity.class)
+				.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+			break;
+		case R.id.itemRefresh:
+			break;
+		}
+		return true;
+	}
 }
 
 
