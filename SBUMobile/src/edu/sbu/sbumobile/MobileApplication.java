@@ -16,6 +16,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,7 +33,12 @@ public class MobileApplication extends Application implements
 	public ArrayList<CalendarEntry> calendar = new ArrayList<CalendarEntry>();
 	public boolean calendarLoading = false;
 	public static final String SEND_CALENDER = "edu.sbu.sbumobile.SEND_CALENDER";
+	public static final String UPDATE_PROGRESS = "edu.sbu.sbumobile.UPDATE_PROGRESS";
+	public static final String SHOW_PROGRESS = "edu.sbu.sbumobile.SHOW_PROGRESS";
+	public static final String HIDE_PROGRESS = "edu.sbu.sbumobile.HIDE_PROGRESS";
+
 	public Context mContext;
+	ProgressDialog pd;
 	
 	@Override
 	public void onCreate() {
@@ -42,7 +48,7 @@ public class MobileApplication extends Application implements
 		Log.i(TAG, "Application Started");
 		mContext = this;
 		DownloadCalendar();
-
+		
 	}
 
 	/*
@@ -66,8 +72,10 @@ public class MobileApplication extends Application implements
 	}
 	
 	public void DownloadCalendar() {
-		Toast.makeText(getApplicationContext(), "Loading Calendar", Toast.LENGTH_LONG).show();
+//		Toast.makeText(getApplicationContext(), "Loading Calendar", Toast.LENGTH_LONG).show();
 		this.calendarLoading = true;
+        sendBroadcast(new Intent(SHOW_PROGRESS));
+        
 		calendar.clear();
 		DownloadWebPageTask task = new DownloadWebPageTask();
 		task.execute(new String[] { "bju1h24pdb4qkh3flljbv2c374",
@@ -86,6 +94,7 @@ public class MobileApplication extends Application implements
 	private class DownloadWebPageTask extends AsyncTask<String, Void, String> {
 		@Override
 		protected String doInBackground(String... urls) {
+			
 			String response = "[";
 			DefaultHttpClient client = new DefaultHttpClient();
 			for (String url : urls) {
@@ -100,7 +109,8 @@ public class MobileApplication extends Application implements
 					ex.printStackTrace();
 					System.out.println("Exception: " + ex);
 				}
-				
+		        sendBroadcast(new Intent(UPDATE_PROGRESS));
+		        
 			}
 			response += "]";
 			return response;
@@ -133,7 +143,6 @@ public class MobileApplication extends Application implements
 			
 			//If no entries back out
 			if (entry != null) {
-				
 				for(Object i : entry) {
 					JSONObject obj = (JSONObject) i;
 				  //title
@@ -157,7 +166,7 @@ public class MobileApplication extends Application implements
 														end.date, start.allDay, start.time, end.time, fullTime);
 				  //Add entry to calendar
 					this.calendar.add(newEntry);
-					}//for each entry
+				}//for each entry
 			}//If entries
 		}//for each calendar
 		
@@ -168,13 +177,14 @@ public class MobileApplication extends Application implements
 			}
 		});
 
+        sendBroadcast(new Intent(UPDATE_PROGRESS));
+        
 		this.calendarLoading = false;
-		System.out.println("Done Loading");
-		Toast.makeText(getApplicationContext(), "Calendar Loaded", Toast.LENGTH_SHORT).show();
+//		Toast.makeText(getApplicationContext(), "Calendar Loaded", Toast.LENGTH_SHORT).show();
 
-        Intent broadcast = new Intent();
-        broadcast.setAction(SEND_CALENDER);
-        sendBroadcast(broadcast);
+        sendBroadcast(new Intent(HIDE_PROGRESS));
+		
+        sendBroadcast(new Intent(SEND_CALENDER));
 
 	}
 	

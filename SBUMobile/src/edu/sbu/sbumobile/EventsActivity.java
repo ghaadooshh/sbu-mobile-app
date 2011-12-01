@@ -9,7 +9,6 @@ import java.util.Map;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -29,7 +28,6 @@ public class EventsActivity extends BaseActivity {
 	private UserItemAdapter adapter;
 	IncomingReceiver receiver;
 	IntentFilter filter;
-	static final String SEND_CALENDAR = "edu.sbu.sbumobile.SEND_CALENDER";
 	AlertDialog ad;
 	  
 	/** Called when the activity is first created. */
@@ -39,7 +37,7 @@ public class EventsActivity extends BaseActivity {
 		setContentView(R.layout.events);
 
 	    receiver = new IncomingReceiver();
-	    filter = new IntentFilter( SEND_CALENDAR );
+	    filter = new IntentFilter(MobileApplication.SEND_CALENDER);
 	    
 		if((!app.calendarLoading) && (!app.calendar.isEmpty())) {
 			setView();
@@ -49,13 +47,7 @@ public class EventsActivity extends BaseActivity {
 		}
 		
 		ad = new AlertDialog.Builder(EventsActivity.this).create();
-		ad.setCancelable(false);
-		ad.setButton("OK", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
+		ad.setCanceledOnTouchOutside(true);
 	}
 	
 	@Override
@@ -81,7 +73,6 @@ public class EventsActivity extends BaseActivity {
 	}
 
 	public void setView() {
-		System.out.println("setView");
         listView = (ListView) findViewById(R.id.EventsListView);
         adapter = new UserItemAdapter(getApplicationContext(), R.layout.calitem, app.calendar);
 
@@ -100,10 +91,12 @@ public class EventsActivity extends BaseActivity {
 					String time = item.get("calTime");
 					if (item.get("calTime") == null)
 						time = "All Day";
-					String details = item.get("calTitle")+ "\n\n" + time + "\n" + item.get("calAuthor");
+					String details = time + "\n" + item.get("calAuthor");
 
+					ad.setTitle(item.get("calTitle"));
 					ad.setMessage(details);
 					ad.show();
+
 				}
 		});
 	}
