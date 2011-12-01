@@ -16,6 +16,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.AsyncTask;
@@ -29,6 +31,8 @@ public class MobileApplication extends Application implements
 	private SharedPreferences prefs;
 	public ArrayList<CalendarEntry> calendar = new ArrayList<CalendarEntry>();
 	public boolean calendarLoading = false;
+	public static final String SEND_CALENDER = "edu.sbu.sbumobile.SEND_CALENDER";
+	public Context mContext;
 	
 	@Override
 	public void onCreate() {
@@ -36,22 +40,9 @@ public class MobileApplication extends Application implements
 		this.prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		this.prefs.registerOnSharedPreferenceChangeListener(this);
 		Log.i(TAG, "Application Started");
-		
-		//Download Calendars
-		Toast.makeText(getApplicationContext(), "Loading Calendar", Toast.LENGTH_LONG).show();
-		this.calendarLoading = true;
-		DownloadWebPageTask task = new DownloadWebPageTask();
-		task.execute(new String[] { "bju1h24pdb4qkh3flljbv2c374",
-									"6lio3us2rcug7v4hou9u4nhqes",
-									"c4ofc4j0efrl0btftglmu4of9s",
-									"th7almtgpen847q8af96fc6dd0",
-									"5pg4h86s5mka7k1ooqdtmg2gl8",
-									"o9cvggpgdmlnqv210arv0s54so",
-									"27ac4a7hv3qfcn8s4ac0tppt8s",
-									"otm002ck939ft163n57nfdbbno",
-									"0srvkmajlvoo5d21lgoo9htdc8",
-									"90pdj27la6p3ismpk2h6871ok0",
-									"kjn15va1uanr5huju3ds6fua8c" });
+		mContext = this;
+		DownloadCalendar();
+
 	}
 
 	/*
@@ -74,7 +65,23 @@ public class MobileApplication extends Application implements
 		Log.i(TAG, "Application Terminated");
 	}
 	
-
+	public void DownloadCalendar() {
+		Toast.makeText(getApplicationContext(), "Loading Calendar", Toast.LENGTH_LONG).show();
+		this.calendarLoading = true;
+		calendar.clear();
+		DownloadWebPageTask task = new DownloadWebPageTask();
+		task.execute(new String[] { "bju1h24pdb4qkh3flljbv2c374",
+									"6lio3us2rcug7v4hou9u4nhqes",
+									"c4ofc4j0efrl0btftglmu4of9s",
+									"th7almtgpen847q8af96fc6dd0",
+									"5pg4h86s5mka7k1ooqdtmg2gl8",
+									"o9cvggpgdmlnqv210arv0s54so",
+									"27ac4a7hv3qfcn8s4ac0tppt8s",
+									"otm002ck939ft163n57nfdbbno",
+									"0srvkmajlvoo5d21lgoo9htdc8",
+									"90pdj27la6p3ismpk2h6871ok0",
+									"kjn15va1uanr5huju3ds6fua8c" });
+	}
 	
 	private class DownloadWebPageTask extends AsyncTask<String, Void, String> {
 		@Override
@@ -164,6 +171,11 @@ public class MobileApplication extends Application implements
 		this.calendarLoading = false;
 		System.out.println("Done Loading");
 		Toast.makeText(getApplicationContext(), "Calendar Loaded", Toast.LENGTH_SHORT).show();
+
+        Intent broadcast = new Intent();
+        broadcast.setAction(SEND_CALENDER);
+        sendBroadcast(broadcast);
+
 	}
 	
 	public class CalendarEntry {
