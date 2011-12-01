@@ -33,7 +33,6 @@
             android:layout_marginLeft="10px"
             android:autoLink="all"
             android:textColor="#0099CC" />
-"
     
     </LinearLayout>
 
