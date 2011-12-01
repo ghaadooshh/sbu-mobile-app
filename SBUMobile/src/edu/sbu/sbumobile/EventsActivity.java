@@ -8,7 +8,9 @@ import java.util.Map;
 
 import edu.sbu.sbumobile.MobileApplication.CalendarEntry;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -61,7 +63,17 @@ public class EventsActivity extends BaseActivity {
 					if (item.get("calTime") == null)
 						time = "All Day";
 					String details = item.get("calTitle")+ "\n\n" + time + "\n" + item.get("calAuthor");
-					Toast.makeText(getApplicationContext(), details, Toast.LENGTH_SHORT).show();
+					//Toast.makeText(getApplicationContext(), details, Toast.LENGTH_SHORT).show();
+					AlertDialog ad = new AlertDialog.Builder(EventsActivity.this).create();
+					ad.setCancelable(false);
+					ad.setMessage(details);
+					ad.setButton("OK", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+					ad.show();
 				}
 		});
 	}
