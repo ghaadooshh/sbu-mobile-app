@@ -30,6 +30,7 @@ public class EventsActivity extends BaseActivity {
 	IncomingReceiver receiver;
 	IntentFilter filter;
 	static final String SEND_CALENDAR = "edu.sbu.sbumobile.SEND_CALENDER";
+	AlertDialog ad;
 	  
 	/** Called when the activity is first created. */
 	@Override
@@ -43,7 +44,20 @@ public class EventsActivity extends BaseActivity {
 		if((!app.calendarLoading) && (!app.calendar.isEmpty())) {
 			setView();
 		}
+		if(!app.calendarLoading && app.calendar.isEmpty()) {
+			app.DownloadCalendar();
+		}
+		
+		ad = new AlertDialog.Builder(EventsActivity.this).create();
+		ad.setCancelable(false);
+		ad.setButton("OK", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
 	}
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -87,16 +101,8 @@ public class EventsActivity extends BaseActivity {
 					if (item.get("calTime") == null)
 						time = "All Day";
 					String details = item.get("calTitle")+ "\n\n" + time + "\n" + item.get("calAuthor");
-//					Toast.makeText(getApplicationContext(), details, Toast.LENGTH_SHORT).show();
-					AlertDialog ad = new AlertDialog.Builder(EventsActivity.this).create();
-					ad.setCancelable(false);
+
 					ad.setMessage(details);
-					ad.setButton("OK", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-						}
-					});
 					ad.show();
 				}
 		});
@@ -162,20 +168,21 @@ public class EventsActivity extends BaseActivity {
 
 	// Called only once first time menu is clicked on
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) { // <4>
+	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.eventsmenu, menu);
 		return true;
 	}
 
 	// Called every time user clicks on a menu item
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) { // <5>
+	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.itemPrefs:
 			startActivity(new Intent(this, PrefsActivity.class)
 				.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
 			break;
 		case R.id.itemRefresh:
+			app.DownloadCalendar();
 			break;
 		}
 		return true;
