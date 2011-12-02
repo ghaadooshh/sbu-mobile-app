@@ -49,7 +49,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/CalendarProgress"
+        android:id="@+id/LoadingLayout"
         android:layout_width="match_parent"
         android:layout_height="74dp"
         android:gravity="bottom"
@@ -57,14 +57,14 @@
         android:visibility="invisible" >
 
         <TextView
-            android:id="@+id/LoadingCalendar"
+            android:id="@+id/LoadingText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Loading Calendar"
             android:gravity="center" />
 
         <ProgressBar
-            android:id="@+id/progressbar"
+            android:id="@+id/LoadingProgressBar"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

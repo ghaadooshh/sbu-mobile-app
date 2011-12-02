@@ -18,7 +18,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import edu.sbu.sbumobile.MobileApplication.CalendarEntry;
 
@@ -26,8 +28,8 @@ import edu.sbu.sbumobile.MobileApplication.CalendarEntry;
 public class EventsActivity extends BaseActivity {
 	private ListView listView;
 	private UserItemAdapter adapter;
-	IncomingReceiver receiver;
-	IntentFilter filter;
+	IncomingReceiver CalendarReceiver;
+	IntentFilter CalendarFilter;
 	AlertDialog ad;
 	  
 	/** Called when the activity is first created. */
@@ -36,38 +38,55 @@ public class EventsActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.events);
 
-	    receiver = new IncomingReceiver();
-	    filter = new IntentFilter(MobileApplication.SEND_CALENDER);
+		//Loading The Calendar
+		CalendarReceiver = new IncomingReceiver();
+	    CalendarFilter = new IntentFilter(MobileApplication.SEND_CALENDER);
+	    setView();
 	    
-		if((!app.calendarLoading) && (!app.calendar.isEmpty())) {
-			setView();
-		}
+	    //If no Internet connection on start, this will restart the download
 		if(!app.calendarLoading && app.calendar.isEmpty()) {
 			app.DownloadCalendar();
 		}
 		
+		//Progress Bar
+		mProgress = (ProgressBar) findViewById(R.id.LoadingProgressBar);
+		mProgress.setMax(app.ProgressMax);
+		mProgress.setProgress(app.CalendarProgress);
+		ProgressView = (LinearLayout) findViewById(R.id.LoadingLayout);
+		ProgressDismiss = "GONE";
+		
+		if(app.calendarLoading) {
+			System.out.println("onStart Showing Progress");
+			ProgressView.setVisibility(LinearLayout.VISIBLE);
+		} else {
+			System.out.println("onStart Hiding Progress");
+			ProgressView.setVisibility(LinearLayout.GONE);
+		}
+		
+		//AlertDialog for calendar details
 		ad = new AlertDialog.Builder(EventsActivity.this).create();
 		ad.setCanceledOnTouchOutside(true);
 	}
 	
+	//CalendarReceiver calls setView() when calendar is ready
 	@Override
 	protected void onResume() {
 		super.onResume();
 		// Register the receiver
-		super.registerReceiver(receiver, filter);
+		super.registerReceiver(CalendarReceiver, CalendarFilter);
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
 		// UNregister the receiver
-		unregisterReceiver(receiver); 
+		unregisterReceiver(CalendarReceiver); 
 	}
 	
 	public class IncomingReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			System.out.println("IncomingReceiver - onReceived");
+			System.out.println("Setting Calendar View");
 			setView();
 		}
 	}
@@ -177,6 +196,9 @@ public class EventsActivity extends BaseActivity {
 		case R.id.itemRefresh:
 			app.DownloadCalendar();
 			break;
+			case R.id.itemRefreshMin:
+				app.DownloadYahooCalendar();
+				break;
 		}
 		return true;
 	}

@@ -1,11 +1,9 @@
 package edu.sbu.sbumobile;
 
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -18,10 +16,6 @@ import android.widget.Toast;
 
 public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 	AlertDialog ad;
-	ProgressBar mProgress;
-	LinearLayout ProgressView;
-	IncomingReceiver receiver;
-	IntentFilter filter;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -51,17 +45,10 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 		});
 
 		//Progress Bar for calendar
-	    receiver = new IncomingReceiver();
-	    filter = new IntentFilter();
-	    filter.addAction(MobileApplication.UPDATE_PROGRESS);
-	    filter.addAction(MobileApplication.SHOW_PROGRESS);
-	    filter.addAction(MobileApplication.HIDE_PROGRESS);
-	    
-        mProgress = (ProgressBar) findViewById(R.id.progressbar);
-		mProgress.setMax(12);
-		ProgressView = (LinearLayout) findViewById(R.id.CalendarProgress);
+		mProgress = (ProgressBar) findViewById(R.id.LoadingProgressBar);
+		mProgress.setMax(app.ProgressMax);
+		ProgressView = (LinearLayout) findViewById(R.id.LoadingLayout);
 
-		registerReceiver(receiver, filter);
 		if(app.calendarLoading) {
 			System.out.println("onStart Showing Progress");
 			ProgressView.setVisibility(LinearLayout.VISIBLE);
@@ -71,31 +58,6 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	public class IncomingReceiver extends BroadcastReceiver {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			String action = intent.getAction();
-			if (action.equals(MobileApplication.HIDE_PROGRESS)) {
-				System.out.println("Hiding Progress");
-				ProgressView.setVisibility(LinearLayout.INVISIBLE);
-			} else if (action.equals(MobileApplication.SHOW_PROGRESS)) {
-				System.out.println("Showing Progress");
-				mProgress.setProgress(0);
-				ProgressView.setVisibility(LinearLayout.VISIBLE);
-			} else if (action.equals(MobileApplication.UPDATE_PROGRESS)) {
-				System.out.println("Updating Progress");
-				mProgress.incrementProgressBy(1);
-			}
-		}
-	}
-	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		// UNregister the receiver
-		unregisterReceiver(receiver); 
-	}
-	
 	public boolean isOnline() {
 		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
