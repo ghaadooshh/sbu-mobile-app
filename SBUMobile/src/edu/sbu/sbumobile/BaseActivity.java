@@ -32,7 +32,6 @@ public class BaseActivity extends Activity {
 
 		ProgressReceiver = new IncomingReceiver();
 		ProgressFilter = new IntentFilter();
-		ProgressFilter.addAction(MobileApplication.UPDATE_PROGRESS);
 		ProgressFilter.addAction(MobileApplication.SHOW_PROGRESS);
 		ProgressFilter.addAction(MobileApplication.HIDE_PROGRESS);
 	    
@@ -51,14 +50,7 @@ public class BaseActivity extends Activity {
 					ProgressView.setVisibility(LinearLayout.GONE);
 			} else if (action.equals(MobileApplication.SHOW_PROGRESS)) {
 				System.out.println("Showing Progress");
-				mProgress.setMax(app.ProgressMax);
-				mProgress.setProgress(0);
-				app.CalendarProgress = 0;
 				ProgressView.setVisibility(LinearLayout.VISIBLE);
-			} else if (action.equals(MobileApplication.UPDATE_PROGRESS)) {
-				int progress = intent.getIntExtra("progress", app.CalendarProgress);
-				System.out.println("Updating Progress "+ progress);
-				mProgress.setProgress(progress);
 			}
 		}
 	}

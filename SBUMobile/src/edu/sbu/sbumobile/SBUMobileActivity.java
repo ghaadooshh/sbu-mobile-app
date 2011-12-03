@@ -46,7 +46,6 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 
 		//Progress Bar for calendar
 		mProgress = (ProgressBar) findViewById(R.id.LoadingProgressBar);
-		mProgress.setMax(app.ProgressMax);
 		ProgressView = (LinearLayout) findViewById(R.id.LoadingLayout);
 
 		if(app.calendarLoading) {

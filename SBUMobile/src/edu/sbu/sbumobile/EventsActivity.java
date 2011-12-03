@@ -50,8 +50,6 @@ public class EventsActivity extends BaseActivity {
 		
 		//Progress Bar
 		mProgress = (ProgressBar) findViewById(R.id.LoadingProgressBar);
-		mProgress.setMax(app.ProgressMax);
-		mProgress.setProgress(app.CalendarProgress);
 		ProgressView = (LinearLayout) findViewById(R.id.LoadingLayout);
 		ProgressDismiss = "GONE";
 		

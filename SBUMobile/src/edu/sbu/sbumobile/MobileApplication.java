@@ -35,9 +35,6 @@ public class MobileApplication extends Application implements
 	public static final String SEND_CALENDER = "edu.sbu.sbumobile.SEND_CALENDER";
 
 	//ProgressBar
-	public int CalendarProgress = 0;
-	public int ProgressMax = 0;
-	public static final String UPDATE_PROGRESS = "edu.sbu.sbumobile.UPDATE_PROGRESS";
 	public static final String SHOW_PROGRESS = "edu.sbu.sbumobile.SHOW_PROGRESS";
 	public static final String HIDE_PROGRESS = "edu.sbu.sbumobile.HIDE_PROGRESS";
 	
@@ -50,7 +47,7 @@ public class MobileApplication extends Application implements
 
 //		DownloadMinCalendar();
 		DownloadYahooCalendar();
-		
+
 	}
 
 	/*
@@ -75,7 +72,6 @@ public class MobileApplication extends Application implements
 	
 	public void DownloadCalendar() {
 		this.calendarLoading = true;
-		ProgressMax = 12; //# of calendars + 1
         sendBroadcast(new Intent(SHOW_PROGRESS));
         
 		calendar.clear();
@@ -96,7 +92,6 @@ public class MobileApplication extends Application implements
 
 	public void DownloadMinCalendar() {
 		this.calendarLoading = true;
-		ProgressMax = 5; //# of calendars + 1
         sendBroadcast(new Intent(SHOW_PROGRESS));
         
 		calendar.clear();
@@ -108,7 +103,6 @@ public class MobileApplication extends Application implements
 	}
 	public void DownloadYahooCalendar() {
 		this.calendarLoading = true;
-		ProgressMax = 12; //# of calendars + 1
         sendBroadcast(new Intent(SHOW_PROGRESS));
         
 		calendar.clear();
@@ -127,18 +121,12 @@ public class MobileApplication extends Application implements
 			
 			HttpGet httpGet = new HttpGet("http://pipes.yahoo.com/pipes/pipe.run?_id=6aaad7af7ac90586d6971f428a3b25b4&_render=json");
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
-			System.out.println("Before url");
 			try{
 				response = client.execute(httpGet, responseHandler);
 			}catch(Exception ex) {
 				ex.printStackTrace();
 				System.out.println("Exception: " + ex);
 			}
-			System.out.println("after url");
-			Intent intent = new Intent(UPDATE_PROGRESS);
-			intent.putExtra("progress", CalendarProgress++);
-		    sendBroadcast(intent);
-			System.out.println("Progress " + CalendarProgress);
 		    
 			return response;
 		}
@@ -200,10 +188,6 @@ public class MobileApplication extends Application implements
 			}//for each entry
 		}//If entries
 
-		Intent intent = new Intent(UPDATE_PROGRESS);
-		intent.putExtra("progress", CalendarProgress++);
-	    sendBroadcast(intent);
-		System.out.println("Progress " + CalendarProgress);
 	}//for each calendar
 	
 	//Sort entries
@@ -223,6 +207,10 @@ public class MobileApplication extends Application implements
 	
     sendBroadcast(new Intent(SEND_CALENDER));
 
+	System.out.println("Calendar:");
+    for (CalendarEntry entry : calendar) {
+		System.out.println(entry.title);
+	}
 }
 	private class DownloadWebPageTask extends AsyncTask<String, Void, String> {
 		@Override
@@ -243,9 +231,6 @@ public class MobileApplication extends Application implements
 					ex.printStackTrace();
 					System.out.println("Exception: " + ex);
 				}
-				Intent intent = new Intent(UPDATE_PROGRESS);
-				intent.putExtra("progress", CalendarProgress++);
-		        sendBroadcast(intent);
 		        
 			}
 			response += "]";
@@ -314,10 +299,6 @@ public class MobileApplication extends Application implements
 			}
 		});
 
-		Intent intent = new Intent(UPDATE_PROGRESS);
-		intent.putExtra("progress", CalendarProgress++);
-        sendBroadcast(intent);
-        
 		this.calendarLoading = false;
 
         sendBroadcast(new Intent(HIDE_PROGRESS));
