@@ -3,11 +3,9 @@
 
   <item android:id="@+id/itemRefresh" android:title="@string/menuRefresh"
     android:icon="@android:drawable/ic_menu_rotate"></item>
-   
-  <item android:id="@+id/itemRefreshMin" android:title="Refresh Min"
-    android:icon="@android:drawable/ic_menu_rotate"></item>
   
   <item android:id="@+id/itemPrefs" android:title="@string/titlePrefs"
-    android:icon="@android:drawable/ic_menu_preferences"></item>
+    android:icon="@android:drawable/ic_menu_preferences"
+    android:visible="false"></item>
     
 </menu>
