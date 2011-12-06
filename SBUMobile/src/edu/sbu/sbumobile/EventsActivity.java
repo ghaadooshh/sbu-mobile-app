@@ -193,9 +193,6 @@ public class EventsActivity extends BaseActivity {
 				.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
 			break;
 		case R.id.itemRefresh:
-			app.DownloadFeed(false);
-			break;
-		case R.id.itemRefreshMin:
 			app.DownloadFeed(true);
 			break;
 		}
