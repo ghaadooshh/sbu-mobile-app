@@ -45,7 +45,7 @@ public class EventsActivity extends BaseActivity {
 	    
 	    //If no Internet connection on start, this will restart the download
 		if(!app.calendarLoading && app.calendar.isEmpty()) {
-			app.DownloadCalendar();
+			app.DownloadFeed(true);
 		}
 		
 		//Progress Bar
@@ -150,6 +150,7 @@ public class EventsActivity extends BaseActivity {
 	        	
 	        	//If events are the same add both and keep going
 	        	if(current.sortDate.compareTo(next.sortDate) == 0) {
+	        		System.out.println(current.title + " " + current.sortDate + " - " + next.title + " " + next.sortDate);
 	        		if (!thisDay.contains(current))
 	            		thisDay.add(current);
 	        		if (!thisDay.contains(next))
@@ -192,11 +193,11 @@ public class EventsActivity extends BaseActivity {
 				.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
 			break;
 		case R.id.itemRefresh:
-			app.DownloadCalendar();
+			app.DownloadFeed(false);
 			break;
-			case R.id.itemRefreshMin:
-				app.DownloadYahooCalendar();
-				break;
+		case R.id.itemRefreshMin:
+			app.DownloadFeed(true);
+			break;
 		}
 		return true;
 	}
