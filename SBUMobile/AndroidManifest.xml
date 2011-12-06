@@ -8,6 +8,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:icon="@drawable/bearcat_tweet_icon"
@@ -35,6 +36,13 @@
         <activity
             android:label="@string/titleSports"
             android:name="SportsActivity" />
+        <activity
+            android:label="@string/titleMap"
+            android:name=".Map" />
+        <uses-library android:name="com.google.android.maps" />
+        <activity
+            android:label="@string/titleWeb"
+            android:name="WebViewActivity" />
     </application>
 
 </manifest>

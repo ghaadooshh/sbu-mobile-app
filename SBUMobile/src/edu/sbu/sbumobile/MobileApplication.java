@@ -16,13 +16,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
 public class MobileApplication extends Application implements
 		OnSharedPreferenceChangeListener {
@@ -32,6 +34,7 @@ public class MobileApplication extends Application implements
 	//Calendar
 	public ArrayList<CalendarEntry> calendar = new ArrayList<CalendarEntry>();
 	public boolean calendarLoading = false;
+	private int errorLoading = 0;
 	public static final String SEND_CALENDER = "edu.sbu.sbumobile.SEND_CALENDER";
 
 	//ProgressBar
@@ -45,8 +48,7 @@ public class MobileApplication extends Application implements
 		this.prefs.registerOnSharedPreferenceChangeListener(this);
 		Log.i(TAG, "Application Started");
 
-//		DownloadMinCalendar();
-		DownloadYahooCalendar();
+		DownloadFeed(true); //true for yahooFeed, false for googleFeed
 
 	}
 
@@ -70,211 +72,136 @@ public class MobileApplication extends Application implements
 		Log.i(TAG, "Application Terminated");
 	}
 	
-	public void DownloadCalendar() {
-		this.calendarLoading = true;
-        sendBroadcast(new Intent(SHOW_PROGRESS));
-        
-		calendar.clear();
-		DownloadWebPageTask task = new DownloadWebPageTask();
-		task.execute(new String[] { "bju1h24pdb4qkh3flljbv2c374",//SBU *
-									"6lio3us2rcug7v4hou9u4nhqes",//SBU-SGA
-									"c4ofc4j0efrl0btftglmu4of9s",//SBU-UAC *
-									"th7almtgpen847q8af96fc6dd0",//SBUacademics *
-									"5pg4h86s5mka7k1ooqdtmg2gl8",//SBUathletics
-									"o9cvggpgdmlnqv210arv0s54so",//SBUChapel
-									"27ac4a7hv3qfcn8s4ac0tppt8s",//SBUclubs/organizations
-									"otm002ck939ft163n57nfdbbno",//SBUintramuralSports
-									"0srvkmajlvoo5d21lgoo9htdc8",//SBUperformingArts *
-									"90pdj27la6p3ismpk2h6871ok0",//SBUresidenceLife
-									"kjn15va1uanr5huju3ds6fua8c" });//Summer Camps
+	public boolean isOnline() {
+		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+		return activeNetworkInfo != null;
 	}
-//	http://www.google.com/calendar/feeds/kjn15va1uanr5huju3ds6fua8c%40group.calendar.google.com/public/full?alt=json&orderby=starttime&singleevents=true&sortorder=ascending&futureevents=true&ctz=America%2FChicago
-
-	public void DownloadMinCalendar() {
-		this.calendarLoading = true;
-        sendBroadcast(new Intent(SHOW_PROGRESS));
-        
-		calendar.clear();
-		DownloadWebPageTask task = new DownloadWebPageTask();
-		task.execute(new String[] { "bju1h24pdb4qkh3flljbv2c374",//SBU
-									"c4ofc4j0efrl0btftglmu4of9s",//SBU-UAC
-									"th7almtgpen847q8af96fc6dd0",//SBUacademics
-									"0srvkmajlvoo5d21lgoo9htdc8" });//SBUperformingArts
+	
+	public void DownloadFeed(boolean yahooFeed) {
+		if (/*errorLoading <= 1 && */isOnline()) {
+			this.calendarLoading = true;
+	        sendBroadcast(new Intent(SHOW_PROGRESS));
+	        
+			calendar.clear();
+			DownloadWebPageTask task = new DownloadWebPageTask();
+			if (yahooFeed) {
+				task.execute(new String[] { "http://pipes.yahoo.com/pipes/pipe.run?_id"+
+				"=6aaad7af7ac90586d6971f428a3b25b4&_render=json"});
+			} else {
+				task.execute(new String[] { "bju1h24pdb4qkh3flljbv2c374",//SBU *
+											"6lio3us2rcug7v4hou9u4nhqes",//SBU-SGA
+											"c4ofc4j0efrl0btftglmu4of9s",//SBU-UAC *
+											"th7almtgpen847q8af96fc6dd0",//SBUacademics *
+											"5pg4h86s5mka7k1ooqdtmg2gl8",//SBUathletics
+											"o9cvggpgdmlnqv210arv0s54so",//SBUChapel
+											"27ac4a7hv3qfcn8s4ac0tppt8s",//SBUclubs/organizations
+											"otm002ck939ft163n57nfdbbno",//SBUintramuralSports
+											"0srvkmajlvoo5d21lgoo9htdc8",//SBUperformingArts *
+											"90pdj27la6p3ismpk2h6871ok0",//SBUresidenceLife
+											"kjn15va1uanr5huju3ds6fua8c" });//Summer Camps
+			}
+		}
 	}
-	public void DownloadYahooCalendar() {
-		this.calendarLoading = true;
-        sendBroadcast(new Intent(SHOW_PROGRESS));
-        
-		calendar.clear();
-		DownloadYahooFeed task = new DownloadYahooFeed();
-		task.execute(new String[] { "bju1h24pdb4qkh3flljbv2c374",//SBU
-									"c4ofc4j0efrl0btftglmu4of9s",//SBU-UAC
-									"th7almtgpen847q8af96fc6dd0",//SBUacademics
-									"0srvkmajlvoo5d21lgoo9htdc8" });//SBUperformingArts
-	}
-	private class DownloadYahooFeed extends AsyncTask<String, Void, String> {
+	
+	private class DownloadWebPageTask extends AsyncTask<String, Void, String> {
+		boolean googleFeed = false;
 		@Override
 		protected String doInBackground(String... urls) {
 			
 			String response = "";
 			DefaultHttpClient client = new DefaultHttpClient();
-			
-			HttpGet httpGet = new HttpGet("http://pipes.yahoo.com/pipes/pipe.run?_id=6aaad7af7ac90586d6971f428a3b25b4&_render=json");
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
-			try{
-				response = client.execute(httpGet, responseHandler);
-			}catch(Exception ex) {
-				ex.printStackTrace();
-				System.out.println("Exception: " + ex);
+			if(urls.length > 1) {
+				googleFeed = true;
+				response += "[";
 			}
-		    
-			return response;
-		}
-	    
-		@Override
-		protected void onPostExecute(String result) {
-			parseYahooCalendar(result);
-		}
-	}
-	private void parseYahooCalendar (String responseBody) {
-	//Parse response in JSON Object
-	JSONObject yahooFeed = null;
-	JSONArray jsonCalendars = null;
-	JSONParser parser = new JSONParser();
-	try {
-		yahooFeed =(JSONObject) parser.parse(responseBody);
-	}catch(Exception ex){
-		System.out.println("Exception: " + ex.getMessage());
-		System.out.println("responseBody: " + responseBody);
-		Toast.makeText(getApplicationContext(), "Error getting calendar", Toast.LENGTH_SHORT).show();
-		return;
-	}
-	jsonCalendars = (JSONArray) ((JSONObject) yahooFeed.get("value")).get("items");
-	for (Object jsonObject : jsonCalendars) {
-
-		JSONObject feed = (JSONObject) ((JSONObject) jsonObject).get("feed");
-		//Get calendar entries from JSONObject, 
-		//Iterate through entries and add wanted info to new ArrayList
-		ArrayList<?> entry = (ArrayList<?>) feed.get("entry");
-		
-		//If no entries back out
-		if (entry != null) {
-			for(Object i : entry) {
-				JSONObject obj = (JSONObject) i;
-			  //title
-				String title = (String)((JSONObject) obj.get("title")).get("_t");
-			  //author
-//				JSONObject firstAuthor = (JSONObject) ((ArrayList<?>) obj.get("author")).get(0);
-				JSONObject firstAuthor = (JSONObject) obj.get("author");
-				String author = (String) ((JSONObject) firstAuthor.get("name")).get("_t");
-			  //where
-//				String where = (String) ((JSONObject) ((ArrayList<?>) obj.get("gd_where")).get(0)).get("valueString");
-				String where = (String) ((JSONObject) (obj.get("gd_where"))).get("valueString");
-			  //when
-//				JSONObject when = (JSONObject) ((ArrayList<?>) obj.get("gd_when")).get(0);
-				JSONObject when = (JSONObject) obj.get("gd_when");
-				//FormatDate splits dates and times and formats them correctly
-				FormatDate start = new FormatDate((String) when.get("startTime"));
-				FormatDate end = new FormatDate((String) when.get("endTime"));
-				
-				String fullTime = null;
-				if (!start.allDay)
-					fullTime = start.time + " - " + end.time;
-		
-				CalendarEntry newEntry = new CalendarEntry(title, author, where, start.sortDate, start.date,
-													end.date, start.allDay, start.time, end.time, fullTime);
-			  //Add entry to calendar
-				this.calendar.add(newEntry);
-			}//for each entry
-		}//If entries
-
-	}//for each calendar
-	
-	//Sort entries
-	Collections.sort(this.calendar, new Comparator<CalendarEntry>() {
-		public int compare(CalendarEntry one, CalendarEntry two){
-			return (one.sortDate).compareTo(two.sortDate);
-		}
-	});
-
-//	Intent intent = new Intent(UPDATE_PROGRESS);
-//	intent.putExtra("progress", CalendarProgress++);
-//    sendBroadcast(intent);
-    
-	this.calendarLoading = false;
-
-    sendBroadcast(new Intent(HIDE_PROGRESS));
-	
-    sendBroadcast(new Intent(SEND_CALENDER));
-
-	System.out.println("Calendar:");
-    for (CalendarEntry entry : calendar) {
-		System.out.println(entry.title);
-	}
-}
-	private class DownloadWebPageTask extends AsyncTask<String, Void, String> {
-		@Override
-		protected String doInBackground(String... urls) {
-			
-			String response = "[";
-			DefaultHttpClient client = new DefaultHttpClient();
 			for (String url : urls) {
-//				http://www.google.com/calendar/feeds/0srvkmajlvoo5d21lgoo9htdc8%40group.calendar.google.com/public/full?alt=json&orderby=starttime&singleevents=true&sortorder=ascending&futureevents=true&ctz=America%2FChicago
-				String calUrl = "http://www.google.com/calendar/feeds/"+ url + "%40group.calendar.google.com/"+
-								"public/full?alt=json&orderby=starttime"+/*&max-results=15*/"&singleevents=true"+
-								"&sortorder=ascending&futureevents=true&ctz=America%2FChicago";
+				String calUrl;
+				if (googleFeed)
+					calUrl = "http://www.google.com/calendar/feeds/"+ url + "%40group.calendar.google.com/"+
+							 "public/full?alt=json&orderby=starttime&singleevents=true"+
+							 "&sortorder=ascending&futureevents=true&ctz=America%2FChicago";
+				else
+					calUrl = url;
 				HttpGet httpGet = new HttpGet(calUrl);
-				ResponseHandler<String> responseHandler = new BasicResponseHandler();
 				try{
-					response += client.execute(httpGet, responseHandler) + ",";
+					response += client.execute(httpGet, responseHandler);
+					if(googleFeed)
+						response += ",";
 				}catch(Exception ex) {
 					ex.printStackTrace();
 					System.out.println("Exception: " + ex);
+					calendarLoading = false;
+			        sendBroadcast(new Intent(HIDE_PROGRESS));
+			        errorLoading++;
+//			        DownloadFeed(false);
 				}
 		        
 			}
-			response += "]";
+			if (googleFeed)
+				response += "]";
 			return response;
 		}
 	    
 		@Override
 		protected void onPostExecute(String result) {
-			parseCalendar(result);
+			if (googleFeed)
+				parseCalendar(false, result);
+			else
+				parseCalendar(true, result);
 		}
 	}
 	
-	private void parseCalendar (String responseBody) {
+	private void parseCalendar (Boolean yahooFeed, String responseBody) {
 		//Parse response in JSON Object
+		JSONObject YahooFeed = null;
 		JSONArray jsonCalendars = null;
 		JSONParser parser = new JSONParser();
 		try {
-			jsonCalendars =(JSONArray) parser.parse(responseBody);
-		}catch(Exception ex){
+			if (yahooFeed) {
+				YahooFeed =(JSONObject) parser.parse(responseBody);
+				jsonCalendars = (JSONArray) ((JSONObject) YahooFeed.get("value")).get("items");
+			} else {
+				jsonCalendars =(JSONArray) parser.parse(responseBody);
+			}
+		} catch (Exception ex) {
 			System.out.println("Exception: " + ex.getMessage());
 			System.out.println("responseBody: " + responseBody);
-			Toast.makeText(getApplicationContext(), "Error getting calendar", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(getApplicationContext(), "Error parsing calendar", Toast.LENGTH_SHORT).show();
+			calendarLoading = false;
+	        sendBroadcast(new Intent(HIDE_PROGRESS));
+	        errorLoading++;
+//	        DownloadFeed(false);
 			return;
 		}
 		for (Object jsonObject : jsonCalendars) {
-
+	
 			JSONObject feed = (JSONObject) ((JSONObject) jsonObject).get("feed");
 			//Get calendar entries from JSONObject, 
 			//Iterate through entries and add wanted info to new ArrayList
-			ArrayList<?> entry = (ArrayList<?>) feed.get("entry");
+			ArrayList<?> entries = (ArrayList<?>) feed.get("entry");
 			
 			//If no entries back out
-			if (entry != null) {
-				for(Object i : entry) {
-					JSONObject obj = (JSONObject) i;
-				  //title
-					String title = (String)((JSONObject) obj.get("title")).get("$t");
-				  //author
-					JSONObject firstAuthor = (JSONObject) ((ArrayList<?>) obj.get("author")).get(0);
-					String author = (String) ((JSONObject) firstAuthor.get("name")).get("$t");
-				  //where
-					String where = (String) ((JSONObject) ((ArrayList<?>) obj.get("gd$where")).get(0)).get("valueString");
-				  //when
-					JSONObject when = (JSONObject) ((ArrayList<?>) obj.get("gd$when")).get(0);
+			if (entries != null) {
+				for(Object entry : entries) {
+					JSONObject obj = (JSONObject) entry;
+					
+					String title, author, where;
+					JSONObject when;
+					if (yahooFeed) {
+						title = (String)((JSONObject) obj.get("title")).get("_t");
+						author = (String) ((JSONObject) ((JSONObject) obj.get("author")).get("name")).get("_t");
+						where = (String) ((JSONObject) (obj.get("gd_where"))).get("valueString");
+						when = (JSONObject) obj.get("gd_when");
+					} else {
+						title = (String)((JSONObject) obj.get("title")).get("$t");
+						JSONObject firstAuthor = (JSONObject) ((ArrayList<?>) obj.get("author")).get(0);
+						author = (String) ((JSONObject) firstAuthor.get("name")).get("$t");
+						where = (String) ((JSONObject) ((ArrayList<?>) obj.get("gd$where")).get(0)).get("valueString");
+						when = (JSONObject) ((ArrayList<?>) obj.get("gd$when")).get(0);
+					}
+					
 					//FormatDate splits dates and times and formats them correctly
 					FormatDate start = new FormatDate((String) when.get("startTime"));
 					FormatDate end = new FormatDate((String) when.get("endTime"));
@@ -282,30 +209,61 @@ public class MobileApplication extends Application implements
 					String fullTime = null;
 					if (!start.allDay)
 						fullTime = start.time + " - " + end.time;
-			
+
 					CalendarEntry newEntry = new CalendarEntry(title, author, where, start.sortDate, start.date,
-														end.date, start.allDay, start.time, end.time, fullTime);
-				  //Add entry to calendar
-					this.calendar.add(newEntry);
+							end.date, start.allDay, start.time, end.time, fullTime);
+					calendar.add(newEntry);
+
+					System.out.println(newEntry.title + " " + newEntry.startDate + " " + newEntry.sortDate);
+					//Multiple day event
+					int numOfDays;
+					if ((numOfDays = (end.sortDate.getDate() - start.sortDate.getDate())) > 1) {
+						FormatDate nextStart = start;
+						for (int i=1; i<numOfDays; i++) {
+//							System.out.println(title);
+//							System.out.println(start.sortDate);
+//							System.out.println(start.date);
+							CalendarEntry nextEntry = newEntry;
+//							System.out.println(nextStart.sortDate.getDate());
+							nextEntry.sortDate.setDate(nextStart.sortDate.getDate() + 1);
+							nextEntry.startDate = nextStart.setDisplayDate(nextEntry.sortDate);
+//							System.out.println(newEntry.startDate + " " + newEntry.sortDate);
+							calendar.add(nextEntry);
+
+							System.out.println(nextEntry.title + " " + nextEntry.startDate + " " + nextEntry.sortDate);
+//							System.out.println(nextEntry.startDate + " " + nextEntry.sortDate);
+							System.out.println("\n");
+							System.out.println("\n");
+							for(CalendarEntry cal : calendar) {
+								System.out.println(cal.title + " " + cal.startDate + " " + cal.sortDate);
+							}
+						}
+					}
 				}//for each entry
 			}//If entries
-
+	
 		}//for each calendar
 		
 		//Sort entries
-		Collections.sort(this.calendar, new Comparator<CalendarEntry>() {
+		Collections.sort(calendar, new Comparator<CalendarEntry>() {
 			public int compare(CalendarEntry one, CalendarEntry two){
 				return (one.sortDate).compareTo(two.sortDate);
 			}
 		});
-
+		System.out.println("\n");
+		System.out.println("\n");
+		for(CalendarEntry cal : calendar) {
+			System.out.println(cal.title + " " + cal.startDate + " " + cal.sortDate);
+		}
+	
 		this.calendarLoading = false;
-
-        sendBroadcast(new Intent(HIDE_PROGRESS));
+	
+	    sendBroadcast(new Intent(HIDE_PROGRESS));
 		
-        sendBroadcast(new Intent(SEND_CALENDER));
-
+	    sendBroadcast(new Intent(SEND_CALENDER));
+	
 	}
+
 	
 	public class CalendarEntry {
 		public String title;
@@ -386,12 +344,23 @@ public class MobileApplication extends Application implements
 			this.sortDate = sortDate;
 
 			//Set Date for display
+//			Date now = new Date();
+//			if (now.getYear() == sortDate.getYear())
+//				formatter.applyPattern("EEEE, MMMM d");
+//			else
+//				formatter.applyPattern("EEEE, MMMM d, yyyy");
+//			this.date = formatter.format(sortDate);
+			this.date = setDisplayDate(sortDate);
+		}
+		
+		public String setDisplayDate(Date date) {
+			SimpleDateFormat formatter= new SimpleDateFormat ();
 			Date now = new Date();
-			if (now.getYear() == sortDate.getYear())
+			if (now.getYear() == date.getYear())
 				formatter.applyPattern("EEEE, MMMM d");
 			else
 				formatter.applyPattern("EEEE, MMMM d, yyyy");
-			this.date = formatter.format(sortDate);
+			return formatter.format(sortDate);
 		}
 	}
 	
