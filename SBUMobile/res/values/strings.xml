@@ -7,11 +7,16 @@
     <string name="titleAlerts">Important Alerts</string>
     <string name="titleEvents">Upcoming Events</string>
     <string name="titleSports">Bearcat Sports</string>
+    <string name="titleMap">SBU Campus</string>
+    <string name="titleWeb">Mehhh</string>
     <string name="subtitleEvents">Calendar</string>
     <string name="subtitleNews">Headlines</string>
     <string name="subtitleAlerts">Warnings</string>
     <string name="subtitleSports">Athletics</string>
     <string name="loading">Loading...</string>
     <string name="menuRefresh">Refresh</string>
+    <string name="mapApiKey2">AIzaSyCWuOokFsGcAfedRhr_l7nOOMeHpyzg1_s</string>
+    <string name="mapApiKey">0Wb72NxKAW1CM3bUoIleWpEQECJ7LGK_APqijlw</string>
+    
 
 </resources>

@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -33,15 +34,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class NewsActivity extends Activity {
-
+	ListView listView;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.news);
 
-		ArrayList<Tweet> tweets = getTweets("from:sbuniv", 1);
-		ListView listView = (ListView) findViewById(R.id.ListViewId);
-		listView.setAdapter(new UserItemAdapter(this, R.layout.listitem, tweets));
+//		ArrayList<Tweet> tweets = getTweets("from:sbuniv", 1);
+		listView = (ListView) findViewById(R.id.ListViewId);
+//		listView.setAdapter(new UserItemAdapter(this, R.layout.listitem, tweets));
+
+		getBackgroundTweets task = new getBackgroundTweets();
+		task.execute("from:sbuniv");
 	}
 
 	public class UserItemAdapter extends ArrayAdapter<Tweet> {
@@ -111,24 +115,54 @@ public class NewsActivity extends Activity {
 		}
 	}
 
-	public ArrayList<Tweet> getTweets(String searchTerm, int page) {
-		String searchUrl = "http://search.twitter.com/search.json?q=@"
-				+ searchTerm + "&rpp=100&page=" + page;
 
-		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
-
-		HttpClient client = new DefaultHttpClient();
-		HttpGet get = new HttpGet(searchUrl);
-
-		ResponseHandler<String> responseHandler = new BasicResponseHandler();
-
-		String responseBody = null;
-		try {
-			responseBody = client.execute(get, responseHandler);
-			System.out.println(responseBody);
-		} catch (Exception ex) {
-			ex.printStackTrace();
+	private class getBackgroundTweets extends AsyncTask<String, Void, String> {
+		@Override
+		protected String doInBackground(String... urls) {
+			
+			String response = "";
+			DefaultHttpClient client = new DefaultHttpClient();
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			for (String searchTerm : urls) {
+				
+				String searchUrl = "http://search.twitter.com/search.json?q=@"
+						+ searchTerm + "&rpp=100&page=" + "1";
+				HttpGet httpGet = new HttpGet(searchUrl);
+				try{
+					response = client.execute(httpGet, responseHandler);
+				}catch(Exception ex) {
+					ex.printStackTrace();
+					System.out.println("Exception: " + ex);
+				}
+		        
+			}
+			return response;
 		}
+	    
+		@Override
+		protected void onPostExecute(String result) {
+			getTweets(result);
+		}
+	}
+	
+	public void getTweets(String responseBody) {
+//		String searchUrl = "http://search.twitter.com/search.json?q=@"
+//				+ searchTerm + "&rpp=100&page=" + page;
+//
+		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
+//
+//		HttpClient client = new DefaultHttpClient();
+//		HttpGet get = new HttpGet(searchUrl);
+//
+//		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+//
+//		String responseBody = null;
+//		try {
+//			responseBody = client.execute(get, responseHandler);
+//			System.out.println(responseBody);
+//		} catch (Exception ex) {
+//			ex.printStackTrace();
+//		}
 
 		JSONObject jsonObject = null;
 		JSONParser parser = new JSONParser();
@@ -157,7 +191,7 @@ public class NewsActivity extends Activity {
 			tweets.add(tweet);
 		}
 
-		return tweets;
+		listView.setAdapter(new UserItemAdapter(this, R.layout.listitem, tweets));
 	}
 
 	public class Tweet {
