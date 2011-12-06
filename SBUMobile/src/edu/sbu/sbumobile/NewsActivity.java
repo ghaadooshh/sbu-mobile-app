@@ -29,20 +29,23 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class NewsActivity extends Activity {
+public class NewsActivity extends BaseActivity {
 	ListView listView;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.news);
 
-//		ArrayList<Tweet> tweets = getTweets("from:sbuniv", 1);
+		mProgress = (ProgressBar) findViewById(R.id.LoadingProgressBar);
+		ProgressView = (LinearLayout) findViewById(R.id.LoadingLayout);
+		ProgressView.setVisibility(LinearLayout.VISIBLE);
+		
 		listView = (ListView) findViewById(R.id.ListViewId);
-//		listView.setAdapter(new UserItemAdapter(this, R.layout.listitem, tweets));
 
 		getBackgroundTweets task = new getBackgroundTweets();
 		task.execute("from:sbuniv");
@@ -142,6 +145,7 @@ public class NewsActivity extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			getTweets(result);
+			ProgressView.setVisibility(LinearLayout.GONE);
 		}
 	}
 	

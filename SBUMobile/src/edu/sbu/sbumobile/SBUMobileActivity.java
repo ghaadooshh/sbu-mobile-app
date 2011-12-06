@@ -59,8 +59,6 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 		if (app.isOnline()) {
 			switch (v.getId()) {
 			case (R.id.newsbutton):
-					Toast.makeText(getApplicationContext(), R.string.loading,
-							Toast.LENGTH_SHORT).show();
 					startActivity(new Intent(this, NewsActivity.class));
 //					startActivity(new Intent(this, WebViewActivity.class));
 				break;
@@ -68,8 +66,6 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 					startActivity(new Intent(this, EventsActivity.class));
 				break;
 			case (R.id.sportsbutton):
-					Toast.makeText(getApplicationContext(), R.string.loading,
-							Toast.LENGTH_SHORT).show();
 					startActivity(new Intent(this, SportsActivity.class));
 //					startActivity(new Intent(this, Map.class));
 				break;

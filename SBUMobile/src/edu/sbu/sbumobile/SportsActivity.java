@@ -27,10 +27,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class SportsActivity extends Activity {
+public class SportsActivity extends BaseActivity {
 	ListView listView;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,10 @@ public class SportsActivity extends Activity {
 //		ArrayList<Tweet> tweets = getTweets("from:sbuniv", 1);
 		listView = (ListView) findViewById(R.id.ListViewId);
 //		listView.setAdapter(new UserItemAdapter(this, R.layout.listitem, tweets));
+		
+		mProgress = (ProgressBar) findViewById(R.id.LoadingProgressBar);
+		ProgressView = (LinearLayout) findViewById(R.id.LoadingLayout);
+		ProgressView.setVisibility(LinearLayout.VISIBLE);
 
 		getBackgroundTweets task = new getBackgroundTweets();
 		task.execute("from:sbubearcats");
@@ -139,6 +145,7 @@ public class SportsActivity extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			getTweets(result);
+			ProgressView.setVisibility(LinearLayout.GONE);
 		}
 	}
 	
