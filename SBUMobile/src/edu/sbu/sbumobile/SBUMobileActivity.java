@@ -1,15 +1,12 @@
 package edu.sbu.sbumobile;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -24,13 +21,13 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.main);
 		
 		//Buttons
-		final ImageView newsButton = (ImageView) findViewById(R.id.newsbutton);
+		final Button newsButton = (Button) findViewById(R.id.newsbutton);
 		newsButton.setOnClickListener(this);
 
-		final ImageView eventsButton = (ImageView) findViewById(R.id.eventsbutton);
+		final Button eventsButton = (Button) findViewById(R.id.eventsbutton);
 		eventsButton.setOnClickListener(this);
 
-		final ImageView sportsButton = (ImageView) findViewById(R.id.sportsbutton);
+		final Button sportsButton = (Button) findViewById(R.id.sportsbutton);
 		sportsButton.setOnClickListener(this);
 		
 		//Alert for no Internet connection
@@ -57,20 +54,15 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	public boolean isOnline() {
-		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-		return activeNetworkInfo != null;
-	}
-
 	@Override
 	public void onClick(View v) {
-		if (isOnline()) {
+		if (app.isOnline()) {
 			switch (v.getId()) {
 			case (R.id.newsbutton):
 					Toast.makeText(getApplicationContext(), R.string.loading,
 							Toast.LENGTH_SHORT).show();
 					startActivity(new Intent(this, NewsActivity.class));
+//					startActivity(new Intent(this, WebViewActivity.class));
 				break;
 			case (R.id.eventsbutton):
 					startActivity(new Intent(this, EventsActivity.class));
@@ -79,6 +71,7 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 					Toast.makeText(getApplicationContext(), R.string.loading,
 							Toast.LENGTH_SHORT).show();
 					startActivity(new Intent(this, SportsActivity.class));
+//					startActivity(new Intent(this, Map.class));
 				break;
 			}
 		} else {
@@ -86,4 +79,5 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 		}
 		
 	}
+	
 }

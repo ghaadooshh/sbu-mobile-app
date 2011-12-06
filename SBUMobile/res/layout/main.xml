@@ -10,41 +10,46 @@
     android:orientation="vertical" >
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="272dp"
         android:layout_height="100dp"
-        android:layout_weight="0.48"
+        android:layout_weight="0.42"
         android:src="@drawable/seal_normal" />
 
     <LinearLayout
         android:id="@+id/buttonLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:gravity="center"
         android:orientation="horizontal" >
 
-        <ImageButton
-            android:id="@+id/newsbutton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="3px"
-            android:layout_weight="1"
-            android:src="@drawable/news" />
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" >
 
-        <ImageButton
-            android:id="@+id/eventsbutton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="3px"
-            android:layout_weight="1"
-            android:src="@drawable/events" />
+            <Button
+                android:id="@+id/newsbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@drawable/newsbutton" />
 
-        <ImageButton
-            android:id="@+id/sportsbutton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="3px"
-            android:layout_weight="1"
-            android:src="@drawable/sports" />
+            <Button
+                android:id="@+id/eventsbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@drawable/eventsbutton" />
+
+            <Button
+                android:id="@+id/sportsbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@drawable/sportsbutton" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
