@@ -38,11 +38,8 @@
             android:name="SportsActivity" />
         <activity
             android:label="@string/titleMap"
-            android:name=".Map" />
+            android:name=".SBUCampusActivity" />
         <uses-library android:name="com.google.android.maps" />
-        <activity
-            android:label="@string/titleWeb"
-            android:name="WebViewActivity" />
     </application>
 
 </manifest>

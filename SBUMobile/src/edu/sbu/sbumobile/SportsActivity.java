@@ -11,7 +11,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -39,9 +38,7 @@ public class SportsActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.news);
 
-//		ArrayList<Tweet> tweets = getTweets("from:sbuniv", 1);
 		listView = (ListView) findViewById(R.id.ListViewId);
-//		listView.setAdapter(new UserItemAdapter(this, R.layout.listitem, tweets));
 		
 		mProgress = (ProgressBar) findViewById(R.id.LoadingProgressBar);
 		ProgressView = (LinearLayout) findViewById(R.id.LoadingLayout);
@@ -150,23 +147,8 @@ public class SportsActivity extends BaseActivity {
 	}
 	
 	public void getTweets(String responseBody) {
-//		String searchUrl = "http://search.twitter.com/search.json?q=@"
-//				+ searchTerm + "&rpp=100&page=" + page;
-//
+
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
-//
-//		HttpClient client = new DefaultHttpClient();
-//		HttpGet get = new HttpGet(searchUrl);
-//
-//		ResponseHandler<String> responseHandler = new BasicResponseHandler();
-//
-//		String responseBody = null;
-//		try {
-//			responseBody = client.execute(get, responseHandler);
-//			System.out.println(responseBody);
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//		}
 
 		JSONObject jsonObject = null;
 		JSONParser parser = new JSONParser();

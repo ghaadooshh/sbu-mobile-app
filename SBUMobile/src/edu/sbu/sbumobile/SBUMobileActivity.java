@@ -9,7 +9,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 	AlertDialog ad;
@@ -60,14 +59,12 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 			switch (v.getId()) {
 			case (R.id.newsbutton):
 					startActivity(new Intent(this, NewsActivity.class));
-//					startActivity(new Intent(this, WebViewActivity.class));
 				break;
 			case (R.id.eventsbutton):
 					startActivity(new Intent(this, EventsActivity.class));
 				break;
 			case (R.id.sportsbutton):
 					startActivity(new Intent(this, SportsActivity.class));
-//					startActivity(new Intent(this, Map.class));
 				break;
 			}
 		} else {

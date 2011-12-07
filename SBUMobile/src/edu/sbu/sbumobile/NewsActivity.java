@@ -3,7 +3,6 @@ package edu.sbu.sbumobile;
 import java.net.URL;
 import java.util.ArrayList;
 
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -12,7 +11,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,7 +19,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -150,23 +147,8 @@ public class NewsActivity extends BaseActivity {
 	}
 	
 	public void getTweets(String responseBody) {
-//		String searchUrl = "http://search.twitter.com/search.json?q=@"
-//				+ searchTerm + "&rpp=100&page=" + page;
-//
+
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
-//
-//		HttpClient client = new DefaultHttpClient();
-//		HttpGet get = new HttpGet(searchUrl);
-//
-//		ResponseHandler<String> responseHandler = new BasicResponseHandler();
-//
-//		String responseBody = null;
-//		try {
-//			responseBody = client.execute(get, responseHandler);
-//			System.out.println(responseBody);
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//		}
 
 		JSONObject jsonObject = null;
 		JSONParser parser = new JSONParser();
