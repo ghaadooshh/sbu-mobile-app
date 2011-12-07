@@ -195,6 +195,9 @@ public class EventsActivity extends BaseActivity {
 		case R.id.itemRefresh:
 			app.DownloadFeed(true);
 			break;
+		case R.id.itemMap:
+			startActivity(new Intent(this, SBUCampusActivity.class));
+			break;
 		}
 		return true;
 	}

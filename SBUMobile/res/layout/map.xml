@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+	 This file shall contain a root ViewGroup of whatever you like. The root   
+	 ViewGroup must contain only a single com.google.android.maps.MapView 
+	 element that should take up the entire screen. The MapView element must 
+	 have an id attribute equal to "m_vwMap". Lastly, the element should be
+	 set to clickable.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	
+	<com.google.android.maps.MapView
+                 android:layout_width="fill_parent"
+                 android:layout_height="fill_parent"
+                 android:apiKey="@string/mapApiKey"
+                 android:clickable="true"
+                 android:id="@+id/m_vwMap"
+                 />
+
+</LinearLayout>
