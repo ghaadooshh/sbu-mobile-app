@@ -29,6 +29,9 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 		final Button sportsButton = (Button) findViewById(R.id.sportsbutton);
 		sportsButton.setOnClickListener(this);
 		
+		final Button mapButton = (Button) findViewById(R.id.mapbutton);
+		mapButton.setOnClickListener(this);
+		
 		//Alert for no Internet connection
 		ad = new AlertDialog.Builder(this).create();
 		ad.setCancelable(false);
@@ -65,6 +68,9 @@ public class SBUMobileActivity extends BaseActivity implements OnClickListener {
 				break;
 			case (R.id.sportsbutton):
 					startActivity(new Intent(this, SportsActivity.class));
+				break;
+			case (R.id.mapbutton):
+					startActivity(new Intent(this, SBUCampusActivity.class));
 				break;
 			}
 		} else {

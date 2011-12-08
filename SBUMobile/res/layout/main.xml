@@ -10,56 +10,58 @@
     android:orientation="vertical" >
 
     <ImageView
-        android:layout_width="272dp"
+        android:layout_width="286dp"
         android:layout_height="100dp"
-        android:layout_weight="0.42"
+        android:layout_weight="0.50"
         android:src="@drawable/seal_normal" />
 
     <LinearLayout
-        android:id="@+id/buttonLayout"
+        android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" >
-
-        <LinearLayout
-            android:id="@+id/linearLayout1"
+        android:gravity="center" >
+        
+        <Button
+            android:id="@+id/eventsbutton"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" >
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/eventsbutton" />
+        <Button
+            android:id="@+id/newsbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/newsbutton" />
 
-            <Button
-                android:id="@+id/newsbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@drawable/newsbutton" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
 
-            <Button
-                android:id="@+id/eventsbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@drawable/eventsbutton" />
+        <Button
+            android:id="@+id/sportsbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/sportsbutton" />
 
-            <Button
-                android:id="@+id/sportsbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@drawable/sportsbutton" />
-
-        </LinearLayout>
-
+        <Button
+            android:id="@+id/mapbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/mapbutton" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/LoadingLayout"
         android:layout_width="match_parent"
-        android:layout_height="74dp"
+        android:layout_height="wrap_content"
         android:baselineAligned="true"
         android:gravity="bottom|center_horizontal"
         android:orientation="horizontal"
-        android:visibility="invisible" >
+        android:visibility="visible" >
 
         <ProgressBar
             android:id="@+id/LoadingProgressBar"

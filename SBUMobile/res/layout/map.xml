@@ -16,7 +16,6 @@
                  android:layout_height="fill_parent"
                  android:apiKey="@string/mapApiKey"
                  android:clickable="true"
-                 android:id="@+id/m_vwMap"
-                 />
+                 android:id="@+id/m_vwMap" />
 
 </LinearLayout>

@@ -38,7 +38,8 @@
             android:name="SportsActivity" />
         <activity
             android:label="@string/titleMap"
-            android:name=".SBUCampusActivity" />
+            android:name=".SBUCampusActivity"
+            android:screenOrientation="portrait" />
         <uses-library android:name="com.google.android.maps" />
     </application>
 
