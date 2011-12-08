@@ -33,15 +33,22 @@
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-      		android:layout_weight="0.50"
+            android:layout_weight="0.28"
             android:gravity="bottom|center" >
 
             <Button
                 android:id="@+id/eventsbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginRight="40dp"
                 android:background="@drawable/eventsbutton" />
+
+            <Button
+                android:id="@+id/newsbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/newsbutton" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -51,18 +58,17 @@
             android:gravity="center" >
 
             <Button
-                android:id="@+id/newsbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@drawable/newsbutton" />
-
-            <Button
                 android:id="@+id/sportsbutton"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
                 android:background="@drawable/sportsbutton" />
+            
+            <Button
+	            android:id="@+id/mapbutton"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/mapbutton" />
         </LinearLayout>
 
         <LinearLayout
