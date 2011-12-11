@@ -14,7 +14,7 @@
 	<com.google.android.maps.MapView
                  android:layout_width="fill_parent"
                  android:layout_height="fill_parent"
-                 android:apiKey="@string/mapApiKey"
+                 android:apiKey="@string/mapApiKeyDebug"
                  android:clickable="true"
                  android:id="@+id/m_vwMap" />
 

@@ -3,6 +3,7 @@ package edu.sbu.sbumobile;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -209,35 +210,35 @@ public class MobileApplication extends Application implements
 					String fullTime = null;
 					if (!start.allDay)
 						fullTime = start.time + " - " + end.time;
+					String multiDayFullTime = null;
+					if (start.allDay)
+						multiDayFullTime = start.date + " - " + end.date;
+					else
+						multiDayFullTime = start.date + " " + start.time + " - " + end.date + " " + end.time;
 
-					CalendarEntry newEntry = new CalendarEntry(title, author, where, start.sortDate, start.date,
-							end.date, start.allDay, start.time, end.time, fullTime);
-					calendar.add(newEntry);
-
-					System.out.println(newEntry.title + " " + newEntry.startDate + " " + newEntry.sortDate);
+					
 					//Multiple day event
 					int numOfDays;
 					if ((numOfDays = (end.sortDate.getDate() - start.sortDate.getDate())) > 1) {
-						FormatDate nextStart = start;
-						for (int i=1; i<numOfDays; i++) {
-//							System.out.println(title);
-//							System.out.println(start.sortDate);
-//							System.out.println(start.date);
-							CalendarEntry nextEntry = newEntry;
-//							System.out.println(nextStart.sortDate.getDate());
-							nextEntry.sortDate.setDate(nextStart.sortDate.getDate() + 1);
-							nextEntry.startDate = nextStart.setDisplayDate(nextEntry.sortDate);
-//							System.out.println(newEntry.startDate + " " + newEntry.sortDate);
+						for (int i=0; i<numOfDays; i++) {
+							CalendarEntry nextEntry = new CalendarEntry();
+							nextEntry.title = title;
+							nextEntry.author = author;
+							nextEntry.where = where;
+							nextEntry.sortDate = addDay(start.sortDate, i);
+							nextEntry.startDate = setDisplayDate(nextEntry.sortDate);
+							nextEntry.endDate = end.date;
+							nextEntry.allDay = start.allDay;
+							nextEntry.startTime = start.time;
+							nextEntry.endTime = end.time;
+							nextEntry.fullTime = multiDayFullTime;
 							calendar.add(nextEntry);
 
-							System.out.println(nextEntry.title + " " + nextEntry.startDate + " " + nextEntry.sortDate);
-//							System.out.println(nextEntry.startDate + " " + nextEntry.sortDate);
-							System.out.println("\n");
-							System.out.println("\n");
-							for(CalendarEntry cal : calendar) {
-								System.out.println(cal.title + " " + cal.startDate + " " + cal.sortDate);
-							}
 						}
+					} else {
+						CalendarEntry newEntry = new CalendarEntry(title, author, where, start.sortDate, start.date,
+								end.date, start.allDay, start.time, end.time, fullTime);
+						calendar.add(newEntry);
 					}
 				}//for each entry
 			}//If entries
@@ -250,11 +251,6 @@ public class MobileApplication extends Application implements
 				return (one.sortDate).compareTo(two.sortDate);
 			}
 		});
-		System.out.println("\n");
-		System.out.println("\n");
-		for(CalendarEntry cal : calendar) {
-			System.out.println(cal.title + " " + cal.startDate + " " + cal.sortDate);
-		}
 	
 		this.calendarLoading = false;
 	
@@ -298,6 +294,34 @@ public class MobileApplication extends Application implements
 			this.startTime = startTime;
 			this.endTime = endTime;
 			this.fullTime = fullTime;
+		}
+
+		public CalendarEntry() {
+			this.title = "";
+			this.author = "";
+			this.where = "";
+			this.sortDate = new Date();
+			this.startDate = "";
+			this.endDate = "";
+			this.allDay = true;
+			this.startTime = "";
+			this.endTime = "";
+			this.fullTime = "";
+			}
+		
+		@Override
+		public String toString() {
+			return "title:\"" + this.title +
+				"\"\n\t\t\t startDate:\"" + this.startDate + 
+				"\"\n\t\t\t endDate:\"" + this.endDate + 
+				"\"\n\t\t\t author:\"" + this.author + 
+				"\"\n\t\t\t where:\"" + this.where + 
+				"\"\n\t\t\t sortDate:\"" + this.sortDate + 
+				"\"\n\t\t\t allDay:\"" + this.allDay + 
+				"\"\n\t\t\t startTime:\"" + this.startTime + 
+				"\"\n\t\t\t endTime:\"" + this.endTime + 
+				"\"\n\t\t\t fullTime:\"" + this.fullTime + 
+				"\"\n";
 		}
 	}
 
@@ -344,24 +368,27 @@ public class MobileApplication extends Application implements
 			this.sortDate = sortDate;
 
 			//Set Date for display
-//			Date now = new Date();
-//			if (now.getYear() == sortDate.getYear())
-//				formatter.applyPattern("EEEE, MMMM d");
-//			else
-//				formatter.applyPattern("EEEE, MMMM d, yyyy");
-//			this.date = formatter.format(sortDate);
 			this.date = setDisplayDate(sortDate);
 		}
+
 		
-		public String setDisplayDate(Date date) {
-			SimpleDateFormat formatter= new SimpleDateFormat ();
-			Date now = new Date();
-			if (now.getYear() == date.getYear())
-				formatter.applyPattern("EEEE, MMMM d");
-			else
-				formatter.applyPattern("EEEE, MMMM d, yyyy");
-			return formatter.format(sortDate);
-		}
+
+	}
+	public Date addDay(Date date, int num) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(Calendar.DATE, num);  // number of days to add
+		date = c.getTime();
+		return date;
+	}
+	public String setDisplayDate(Date date) {
+		SimpleDateFormat formatter= new SimpleDateFormat ();
+		Date now = new Date();
+		if (now.getYear() == date.getYear())
+			formatter.applyPattern("EEEE, MMMM d");
+		else
+			formatter.applyPattern("EEEE, MMMM d, yyyy");
+		return formatter.format(date);
 	}
 	
 	

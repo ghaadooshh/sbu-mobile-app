@@ -12,7 +12,7 @@
     <string name="subtitleNews">Headlines</string>
     <string name="subtitleSports">Athletics</string>
     <string name="menuRefresh">Refresh</string>
-    <string name="mapApiKey">0Wb72NxKAW1CM3bUoIleWpEQECJ7LGK_APqijlw</string>
+    <string name="mapApiKeyDebug">0Wb72NxKAW1CM3bUoIleWpEQECJ7LGK_APqijlw</string>
+    <string name="mapApiKey">0Wb72NxKAW1A7FulAKMhk35zDyrtCieVeO_HqzA</string>
     
-
 </resources>
