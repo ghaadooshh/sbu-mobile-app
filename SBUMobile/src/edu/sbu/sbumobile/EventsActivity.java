@@ -150,7 +150,7 @@ public class EventsActivity extends BaseActivity {
 	        	
 	        	//If events are the same add both and keep going
 	        	if(current.sortDate.compareTo(next.sortDate) == 0) {
-	        		System.out.println(current.title + " " + current.sortDate + " - " + next.title + " " + next.sortDate);
+//	        		System.out.println(current.title + " " + current.sortDate + " - " + next.title + " " + next.sortDate);
 	        		if (!thisDay.contains(current))
 	            		thisDay.add(current);
 	        		if (!thisDay.contains(next))
@@ -194,9 +194,6 @@ public class EventsActivity extends BaseActivity {
 			break;
 		case R.id.itemRefresh:
 			app.DownloadFeed(true);
-			break;
-		case R.id.itemMap:
-			startActivity(new Intent(this, SBUCampusActivity.class));
 			break;
 		}
 		return true;

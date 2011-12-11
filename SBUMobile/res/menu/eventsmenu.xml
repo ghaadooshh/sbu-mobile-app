@@ -7,7 +7,5 @@
   <item android:id="@+id/itemPrefs" android:title="@string/titlePrefs"
     android:icon="@android:drawable/ic_menu_preferences"
     android:visible="false"></item>
-  
-  <item android:id="@+id/itemMap"></item>
     
 </menu>

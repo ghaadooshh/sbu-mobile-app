@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:id="@+id/popBub">
+
+
+   <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="test text"
+      android:maxEms="20"
+
+      android:background="@drawable/bubble"
+      android:gravity="center">
+   </TextView>
+</FrameLayout>
