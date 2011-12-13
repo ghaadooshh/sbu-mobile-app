@@ -15,5 +15,5 @@
     <string name="menuRefresh">Refresh</string>
     <string name="mapApiKeyDebug">0Wb72NxKAW1CM3bUoIleWpEQECJ7LGK_APqijlw</string>
     <string name="mapApiKey">0Wb72NxKAW1A7FulAKMhk35zDyrtCieVeO_HqzA</string>
-    
+    <string name="infoPane">"This app helps you keep up on the latest SBU buzz. Simply touch one of the icons on the main screen to see SBU's calendar, campus map, or latest headlines and sports news.\n\nYou can touch any headline, location, or event for additional information.\n\nReturn to the main menu at any time by pressing the BACK button.\n\nThink this app is pretty fresh?  Send tribute to xXherpderpXx@gmail.com"</string>
 </resources>
