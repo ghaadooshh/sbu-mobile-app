@@ -3,5 +3,8 @@
 
   <item android:id="@+id/mapToggle"
 		android:icon="@android:drawable/ic_menu_mapmode"></item>
+  
+  <item android:id="@+id/itemInfo" android:title="@string/titleInfo"
+    android:icon="@android:drawable/ic_menu_help"></item>
     
 </menu>

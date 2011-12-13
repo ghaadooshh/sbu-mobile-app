@@ -418,6 +418,10 @@ public class SBUCampusActivity extends MapActivity implements LocationListener {
 			else
 				mapView.setSatellite(true);
 			break;
+		case R.id.itemInfo:
+//			startActivity(new Intent(this, PrefsActivity.class)
+//				.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+			break;
 		}
 		return true;
 	}

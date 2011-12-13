@@ -195,6 +195,10 @@ public class EventsActivity extends BaseActivity {
 		case R.id.itemRefresh:
 			app.DownloadFeed(true);
 			break;
+		case R.id.itemInfo:
+//			startActivity(new Intent(this, PrefsActivity.class)
+//				.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+			break;
 		}
 		return true;
 	}

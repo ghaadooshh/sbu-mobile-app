@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class BaseActivity extends Activity {
 	MobileApplication app;
@@ -75,6 +76,10 @@ public class BaseActivity extends Activity {
 		case R.id.itemPrefs:
 			startActivity(new Intent(this, PrefsActivity.class)
 				.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+			break;
+		case R.id.itemInfo:
+//			startActivity(new Intent(this, PrefsActivity.class)
+//				.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
 			break;
 		}
 		return true;
