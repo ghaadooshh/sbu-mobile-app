@@ -17,6 +17,7 @@
         android:orientation="vertical" >
 
         <ImageView
+	        android:id="@+id/bigseal"
             android:layout_width="237dp"
             android:layout_height="match_parent"
             android:src="@drawable/seal_normal" />
