@@ -421,6 +421,12 @@ public class SBUCampusActivity extends MapActivity implements LocationListener {
 		case R.id.itemInfo:
 //			startActivity(new Intent(this, PrefsActivity.class)
 //				.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+			AlertDialog ad;
+			ad = new AlertDialog.Builder(this).create();
+			ad.setCanceledOnTouchOutside(true);
+			ad.setTitle("Info");
+			ad.setMessage(getResources().getString(R.string.infoPane));
+			ad.show();
 			break;
 		}
 		return true;
