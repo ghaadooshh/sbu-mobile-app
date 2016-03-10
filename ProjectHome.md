@@ -1,0 +1,1 @@
+This is a mobile application to allow to student to see the newest news, events, and alerts from campus.
